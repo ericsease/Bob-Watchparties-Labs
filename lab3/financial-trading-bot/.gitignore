@@ -1,0 +1,10 @@
+.env
+*.db
+__pycache__/
+*.pyc
+venv/
+.venv/
+models/*.pkl
+models/*.joblib
+data/*.csv
+strategies/*.json
