@@ -33,9 +33,9 @@ By the end of this lab, you will:
 ## Prerequisites
 
 Before starting, ensure you have:
-- [ ] Completed Lab 1 and Lab 2 (or familiar with Flask and JavaScript)
 - [ ] Python 3.8+ installed
 - [ ] Bob installed and running
+- [ ] Basic familiarity with Flask and JavaScript
 - [ ] Understanding of basic web security concepts
 
 ## Lab Structure

@@ -160,42 +160,41 @@ Use Bob to analyze existing code, identify security vulnerabilities, and impleme
 
 ---
 
-## 🗺️ Recommended Learning Path
+## 🗺️ Choose Your Lab
+
+**Pick the lab that interests you most!** Each lab is designed to be completed independently in about 45-60 minutes.
 
 ```
-Start Here
-    ↓
-┌─────────────────────┐
-│  Prerequisites      │ ← Check software requirements
-│  (5-10 minutes)     │
-└─────────────────────┘
-    ↓
-┌─────────────────────┐
-│  Lab 1: BYOC        │ ← Explore freely (optional)
-│  (30-45 minutes)    │
-└─────────────────────┘
-    ↓
-┌─────────────────────┐
-│  Lab 2: Todo App    │ ← Beginner: Learn core features
-│  (45 minutes)       │
-└─────────────────────┘
-    ↓
-┌─────────────────────┐
-│  Lab 3: Security    │ ← Advanced: Security practices
-│  (45 minutes)       │
-└─────────────────────┘
-    ↓
-Apply to Your Projects!
+┌─────────────────────────────────────────────────────────┐
+│                    Prerequisites                         │
+│              Check software requirements                 │
+│                    (5-10 minutes)                        │
+└─────────────────────────────────────────────────────────┘
+                            ↓
+        ┌───────────────────┴───────────────────┐
+        ↓                   ↓                   ↓
+┌───────────────┐   ┌───────────────┐   ┌───────────────┐
+│   Lab 1:      │   │   Lab 2:      │   │   Lab 3:      │
+│   BYOC        │   │   Todo App    │   │   Security    │
+│               │   │               │   │               │
+│ Explore       │   │ Beginner      │   │ Advanced      │
+│ Freely        │   │ Structured    │   │ Security      │
+│               │   │               │   │               │
+│ 30-45 min     │   │ 45 min        │   │ 45 min        │
+└───────────────┘   └───────────────┘   └───────────────┘
+        ↓                   ↓                   ↓
+        └───────────────────┴───────────────────┘
+                            ↓
+                Apply to Your Projects!
 ```
 
-### Flexible Learning
+### Which Lab Should You Choose?
 
-You don't have to complete the labs in order:
+- **Want to explore freely?** → Lab 1 (BYOC) - Build what interests you
+- **Prefer structured learning?** → Lab 2 (Beginner) - Follow step-by-step
+- **Interested in security?** → Lab 3 (Advanced) - Learn vulnerability detection
 
-- **Short on time?** Pick one lab that interests you most
-- **Want to explore?** Start with Lab 1 (BYOC)
-- **Prefer structure?** Go straight to Lab 2 (Beginner)
-- **Security focused?** Jump to Lab 3 (Advanced)
+**Note:** Labs are independent - pick one and dive in! No need to complete them in order.
 
 ---
 
