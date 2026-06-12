@@ -8,7 +8,7 @@ These labs are designed to give you hands-on experience with Bob's core features
 
 1. **Lab 1: Bring Your Own Use Case** - Explore Bob with a project of your choice
 2. **Lab 2: Beginner - Building a Todo Application** - Create a full-stack application from scratch
-3. **Lab 3: Advanced - Financial Security Analysis** - Identify and fix security vulnerabilities
+3. **Lab 3: Advanced - Security Analysis & Code Fixes** - Identify and fix security vulnerabilities
 
 **Total Learning Time**: ~60 minutes (choose your favorite lab!)
 
@@ -51,6 +51,7 @@ Now let's open the labs in Bob:
 Before starting the labs, make sure you have the required software installed. See [prerequisites.md](prerequisites.md) for detailed setup instructions.
 
 **Quick check:**
+
 ```bash
 # Check Python version (need 3.8+)
 python --version
@@ -65,7 +66,7 @@ git --version
 
 - **New to Bob?** → Start with [Lab 1: Bring Your Own Use Case](lab1/README.md)
 - **Want structured learning?** → Start with [Lab 2: Beginner - Todo App](lab2/README.md)
-- **Interested in security?** → Start with [Lab 3: Advanced - Financial Security](lab3/README.md)
+- **Interested in security?** → Start with [Lab 3: Advanced - Security Analysis](lab3/README.md)
 
 ---
 
@@ -76,12 +77,14 @@ git --version
 **Perfect for:** First-time Bob users who want to explore freely
 
 Explore Bob's capabilities by building something that interests you! This open-ended lab provides:
+
 - Suggested project ideas (browser games, productivity tools, dashboards)
 - Best practices for proof-of-concept projects
 - Tips for effective prompting
 - Guidance on using Bob's different modes
 
 **What you'll learn:**
+
 - How to effectively prompt Bob
 - When to use different Bob modes
 - Rapid prototyping with AI assistance
@@ -98,18 +101,21 @@ Explore Bob's capabilities by building something that interests you! This open-e
 Build a complete full-stack application from scratch using Bob's AI-powered features.
 
 **What you'll build:**
+
 - Python Flask REST API backend
 - JavaScript frontend with modern UI
 - SQLite database integration
 - Complete CRUD operations
 
 **Bob features you'll use:**
+
 - ✅ Plan Mode for architecture and planning
 - ✅ Code Mode for implementation
 - ✅ Auto-approvals for rapid development
 - ✅ Literate coding for self-documenting code
 
 **What you'll learn:**
+
 - Switching between Bob's modes effectively
 - Using auto-approvals safely
 - Building full-stack applications with AI
@@ -119,29 +125,36 @@ Build a complete full-stack application from scratch using Bob's AI-powered feat
 
 ---
 
-### 🟡 Lab 3: Advanced - Financial Security Analysis (45 minutes)
+### 🔴 Lab 3: Advanced - Security Analysis & Code Fixes (45 minutes)
 
-**Perfect for:** Advanced users learning security best practices with AI-powered development
+**Perfect for:** Developers who want to learn security best practices and vulnerability detection
 
-Learn to identify and fix security vulnerabilities in a financial trading application using Bob's security features.
+Use Bob to analyze existing code, identify security vulnerabilities, and implement fixes. Learn to recognize common security issues like SQL injection, XSS, and hardcoded secrets.
 
 **What you'll analyze:**
-- Secret exposure and credential management
-- SQL injection vulnerabilities
-- Financial data leakage via logging
-- Defense-in-depth security practices
+
+- SQL injection vulnerabilities in database queries
+- Cross-site scripting (XSS) in frontend code
+- Hardcoded secrets and credentials
+- Missing input validation
+- Insecure error handling
 
 **Bob features you'll use:**
-- ✅ `.bobignore` for file access control
-- ✅ Custom security rules in `.bob/rules-*`
-- ✅ Code analysis and vulnerability detection
-- ✅ Secure code generation
+
+- ✅ Ask Mode for code understanding
+- ✅ Plan Mode for security analysis and planning
+- ✅ Code Mode for implementing fixes
+- ✅ Bob Findings for automated vulnerability detection
+- ✅ Multi-file code analysis
 
 **What you'll learn:**
-- Protecting sensitive files with `.bobignore`
-- Creating custom security rules for Bob
-- Implementing defense-in-depth security
-- Security considerations for financial applications
+
+- Using Bob's different modes for security analysis
+- Identifying SQL injection vulnerabilities
+- Recognizing XSS attack vectors
+- Finding and fixing hardcoded secrets
+- Implementing secure coding best practices
+- Applying defense-in-depth security principles
 
 **[Start Lab 3 →](lab3/README.md)**
 
@@ -178,6 +191,7 @@ Apply to Your Projects!
 ### Flexible Learning
 
 You don't have to complete the labs in order:
+
 - **Short on time?** Pick one lab that interests you most
 - **Want to explore?** Start with Lab 1 (BYOC)
 - **Prefer structure?** Go straight to Lab 2 (Beginner)
@@ -190,17 +204,20 @@ You don't have to complete the labs in order:
 Before starting these labs, ensure you have:
 
 ### Required Software
+
 - **Python 3.8+** - [Download](https://www.python.org/downloads/)
 - **Git 2.x+** - [Download](https://git-scm.com/)
 - **Bob IDE** - Installed and configured
 - **Text Editor** - VS Code recommended (if not using Bob exclusively)
 
 ### Required Knowledge
+
 - Basic command line usage (cd, ls, running commands)
 - Basic understanding of files and directories
 - Willingness to learn and experiment!
 
 ### Optional (Helpful but not required)
+
 - Basic Python syntax
 - Basic HTML/CSS/JavaScript
 - REST API concepts
@@ -213,6 +230,7 @@ Before starting these labs, ensure you have:
 ## 🎓 What You'll Learn
 
 ### Bob's Core Features
+
 - **Multiple Modes**: Plan, Code, and Ask modes for different tasks
 - **Auto-approvals**: Rapid development with automated confirmations
 - **Literate Coding**: Self-documenting code with inline explanations
@@ -220,6 +238,7 @@ Before starting these labs, ensure you have:
 - **Code Analysis**: Understanding and improving existing codebases
 
 ### Technical Skills
+
 - Full-stack web development (Python Flask + JavaScript)
 - REST API design and implementation
 - Security best practices (SQL injection prevention, secrets management)
@@ -227,6 +246,7 @@ Before starting these labs, ensure you have:
 - AI-assisted development workflows
 
 ### Best Practices
+
 - Effective prompting techniques
 - Iterative development with AI
 - Security-first development
@@ -240,12 +260,14 @@ Before starting these labs, ensure you have:
 You'll know you've successfully completed the labs when you can:
 
 ### After Lab 1 (BYOC)
+
 - [ ] Effectively prompt Bob for your specific needs
 - [ ] Switch between Bob's different modes
 - [ ] Build a working prototype quickly
 - [ ] Iterate on ideas with AI assistance
 
 ### After Lab 2 (Beginner)
+
 - [ ] Use Plan Mode for architecture decisions
 - [ ] Use Code Mode for implementation
 - [ ] Apply auto-approvals safely
@@ -253,6 +275,7 @@ You'll know you've successfully completed the labs when you can:
 - [ ] Integrate version control
 
 ### After Lab 3 (Advanced)
+
 - [ ] Identify common security vulnerabilities
 - [ ] Use `.bobignore` to protect sensitive files
 - [ ] Create custom security rules
@@ -266,6 +289,7 @@ You'll know you've successfully completed the labs when you can:
 ### During the Labs
 
 Each lab includes:
+
 - Step-by-step instructions
 - Example prompts to use with Bob
 - Troubleshooting sections
@@ -281,17 +305,20 @@ Each lab includes:
 ### Common Issues
 
 **Bob isn't responding as expected:**
+
 - Make sure you're in the correct mode (Plan, Code, or Ask)
 - Try rephrasing your prompt more specifically
 - Check if Bob needs more context about your goal
 
 **Code isn't working:**
+
 - Verify all dependencies are installed
 - Check that you're in the correct directory
 - Review error messages carefully
 - Ask Bob to explain the error
 
 **Installation problems:**
+
 - See [prerequisites.md](prerequisites.md) for detailed setup
 - Verify software versions match requirements
 - Check system compatibility
@@ -303,18 +330,21 @@ Each lab includes:
 After completing these labs, you can:
 
 ### Apply to Real Projects
+
 - Use Bob on your own development work
 - Apply security practices to your applications
 - Build prototypes quickly
 - Improve existing codebases
 
 ### Explore Advanced Features
+
 - Create custom Bob modes for your team
 - Integrate Bob into CI/CD pipelines
 - Build custom MCP servers
 - Develop team-specific rules and guidelines
 
 ### Share Your Experience
+
 - Help others learn Bob
 - Share your projects
 - Contribute improvements to these labs
@@ -325,6 +355,7 @@ After completing these labs, you can:
 ## 📖 Additional Resources
 
 ### Documentation
+
 - [Prerequisites & Setup](prerequisites.md) - Detailed installation and setup
 - [Lab 1: BYOC](lab1/README.md) - Bring your own use case
 - [Lab 2: Building Apps](lab2/README.md) - Beginner full-stack development
@@ -356,18 +387,21 @@ Track your progress through the labs:
 ## 💡 Tips for Success
 
 ### Before You Start
+
 1. ✅ Verify all prerequisites are installed
 2. ✅ Read through the lab overview
 3. ✅ Set aside uninterrupted time
 4. ✅ Have a notepad ready for notes
 
 ### During the Labs
+
 1. 🎯 Follow the steps in order
 2. 💬 Read Bob's responses carefully
 3. 🧪 Test frequently as you build
 4. 📝 Take notes on what you learn
 
 ### After Each Lab
+
 1. 🎉 Celebrate your progress!
 2. 📊 Review what you built
 3. 🤔 Reflect on what you learned
@@ -403,4 +437,4 @@ Track your progress through the labs:
 
 **Happy Learning! 🚀**
 
-*Last Updated: June 2026*
+_Last Updated: June 2026_

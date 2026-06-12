@@ -105,7 +105,7 @@ While Bob IDE is the primary tool, having a separate text editor can be helpful 
 
 ---
 
-### Lab 1: Building a Todo Application
+### Lab 2: Building a Todo Application
 
 **Required:**
 - Python 3.8 or higher
@@ -180,54 +180,49 @@ rm -rf test_env  # Clean up
 
 ---
 
-### Lab 2: Security Analysis (Financial Trading Bot)
+### Lab 3: Security Analysis & Code Fixes
 
 **Required:**
-- Python 3.10 or higher (note: higher version than Lab 1)
+- Python 3.8 or higher
 - pip (Python package manager)
 - Virtual environment support
 
 **Python Packages (installed during lab):**
 ```
-flask==3.1.0
-flask-sqlalchemy==3.1.1
-requests==2.32.3
-python-dotenv==1.0.1
-cryptography==44.0.0
-apscheduler==3.10.4
-numpy==2.2.3
-pandas==2.2.3
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-SQLAlchemy==3.1.1
+python-dotenv==1.0.0
 ```
 
 **Installation:**
 
-Same as Lab 1, but ensure you have **Python 3.10+**:
+Same as Lab 2 - Python 3.8+ with pip and virtual environment support.
 
 ```bash
 # Check Python version
 python3 --version
-# Should show 3.10.x or higher
+# Should show 3.8.x or higher
 
-# If you need to upgrade Python:
-# macOS (Homebrew):
-brew install python@3.11
-
-# Windows: Download from https://www.python.org/downloads/
-# Linux: Use your package manager to install python3.10 or higher
+# Verify pip
+pip3 --version
 ```
 
 **Verification:**
 ```bash
-# Verify Python 3.10+
+# Verify Python 3.8+
 python3 --version
 
 # Verify pip
 pip3 --version
 
-# Test that you can install packages
-pip3 install --dry-run requests
-# Should show what would be installed without actually installing
+# Test virtual environment creation
+python3 -m venv test_env
+# Should create a test_env directory without errors
+rm -rf test_env  # Clean up
 ```
+
+**Note:** This lab focuses on security analysis and doesn't require any special tools beyond Python and the packages listed above. The vulnerable application code is provided in the lab materials.
 
 ---
 
