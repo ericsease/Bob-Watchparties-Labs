@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this lab, you'll learn to use Bob's AI-powered features to build a complete full-stack todo application from scratch. You'll experience Bob's different modes, auto-approvals, literate coding, and GitHub integration.
+In this lab, you'll learn to use Bob's AI-powered features to build a complete full-stack todo application from scratch. You'll experience Bob's different modes, auto-approvals, and literate coding.
 
 **Duration**: 45 minutes
 **Difficulty**: Beginner to Intermediate
@@ -19,7 +19,6 @@ A full-stack todo application with:
 - **Backend**: Python Flask REST API with SQLite database
 - **Frontend**: Modern JavaScript single-page application
 - **Features**: Create, read, update, and delete todos
-- **Version Control**: GitHub repository with proper commits
 
 ## Learning Objectives
 
@@ -27,17 +26,13 @@ By the end of this lab, you will:
 - ✅ Understand Bob's three modes (Plan, Code, Ask)
 - ✅ Use auto-approvals for rapid development
 - ✅ Practice literate coding techniques
-- ✅ Integrate GitHub using MCP servers
 - ✅ Build a complete full-stack application
 
 ## Prerequisites
 
 Before starting, ensure you have:
 - [ ] Python 3.8+ installed
-- [ ] Node.js 14+ installed (for npm)
-- [ ] Git installed and configured
 - [ ] Bob installed and running
-- [ ] GitHub account (for MCP integration)
 - [ ] Text editor or IDE open
 
 If you haven't completed setup, see [prerequisites.md](../prerequisites.md).
@@ -47,10 +42,9 @@ If you haven't completed setup, see [prerequisites.md](../prerequisites.md).
 ```
 Lab 2 Timeline (45 minutes)
 ├── Step 1: Introduction & Planning (5 min)
-├── Step 2: Backend Development (15 min)
+├── Step 2: Backend Development (20 min)
 ├── Step 3: Frontend Development (15 min)
-├── Step 4: GitHub Integration (5 min)
-└── Step 5: Testing & Verification (5 min)
+└── Step 4: Testing & Verification (5 min)
 ```
 
 ---
@@ -419,83 +413,11 @@ xdg-open index.html
 
 ---
 
-## Step 4: GitHub Integration with MCP (10 minutes)
-
-Now let's use Bob's GitHub MCP server to manage version control.
-
-### 4.1: Switch to Advanced Mode
-
-Before using GitHub MCP servers, switch to Advanced mode:
-
-1. Click the mode selector in Bob's interface
-2. Select **Advanced** mode (⚡ Advanced)
-3. Confirm the mode switch
-
-**Why Advanced mode is required:**
-- Advanced mode provides the same code editing capabilities as Code mode, plus advanced GitHub MCP server access
-- With Advanced mode, Bob can execute advanced GitHub operations (create repos, make commits, push code)
-
-Once in Advanced mode, you can use all the same code editing features while also accessing GitHub MCP integrations.
-
-### 4.2: Understanding MCP Servers
-
-> **🔧 Bob Differentiator: [MCP Server Integration](../bob-differentiators.md#mcp-server-integration)**
-> Bob's MCP (Model Context Protocol) integration is a powerful differentiator that allows you to connect external tools and services directly into your workflow. Unlike other AI assistants that work in isolation, Bob can integrate with your company's internal APIs, databases, documentation systems, and more. This means Bob adapts to YOUR environment, not the other way around.
-
-**MCP (Model Context Protocol)** allows Bob to interact with external services like GitHub.
-
-Benefits:
-- Bob can create repositories
-- Bob can make commits
-- Bob can push code
-- All through natural language commands
-- **Extensible**: Connect to any service with an MCP server (JIRA, databases, deployment tools, etc.)
-- **Seamless**: No context switching between tools
-
-### 4.2: Initialize Git Repository
-
-**Prompt for Bob:**
-
-```
-Use the GitHub MCP server to:
-1. Initialize a git repository in the current directory
-2. Create a .gitignore file for Python and Node.js
-3. Create an initial commit with message "Initial todo app implementation"
-```
-
-### 4.3: Create GitHub Repository
-
-**Prompt for Bob:**
-
-```
-Create a new GitHub repository called "bob-todo-app" and push the code.
-Include a README.md describing the project.
-```
-
-**What Bob Will Do:**
-1. Create `.gitignore` with appropriate entries
-2. Initialize git repository
-3. Add all files to staging
-4. Create initial commit
-5. Create GitHub repository (if MCP is configured)
-6. Push code to GitHub
-
-### 4.4: Verify on GitHub
-
-1. Go to your GitHub account
-2. Find the `bob-todo-app` repository
-3. Verify all files are present
-4. Check the commit history
-
-**✅ Checkpoint**: Code is on GitHub with proper commits.
-
----
-
-## Step 5: Testing & Verification (5 minutes)
+## Step 4: Testing & Verification (5 minutes)
 
 Let's test the complete application end-to-end.
 
-### 5.1: Start the Backend
+### 4.1: Start the Backend
 
 ```bash
 # Navigate to backend directory
@@ -565,13 +487,12 @@ python
 
 ## Congratulations! 🎉
 
-You've successfully completed Lab 1! You've learned to:
+You've successfully completed Lab 2! You've learned to:
 
 - ✅ Use Bob's Plan mode for planning
 - ✅ Use Bob's Code mode for implementation
 - ✅ Enable and use auto-approvals
 - ✅ Apply literate coding principles
-- ✅ Integrate GitHub using MCP servers
 - ✅ Build a complete full-stack application
 
 ## What You've Built
@@ -588,7 +509,6 @@ bob-todo-app/
 │   ├── index.html         # UI structure
 │   ├── styles.css         # Styling
 │   └── app.js             # Frontend logic
-└── .gitignore             # Git ignore rules
 ```
 
 ## Key Takeaways
@@ -609,11 +529,6 @@ bob-todo-app/
 - Helps team members understand your code
 - Useful for learning and teaching
 
-### GitHub MCP
-- Streamlines version control
-- Natural language git operations
-- Integrates seamlessly with Bob
-- **Extensible**: Part of Bob's [MCP Server Integration](../bob-differentiators.md#mcp-server-integration) capability
 
 > **💡 Behind the Scenes: Intelligent Resource Optimization**
 > While you've been building this app, Bob has been automatically selecting the right AI model for each task—using powerful models for complex architecture decisions and lighter models for simple file operations. This [automatic model selection](../bob-differentiators.md#automatic-model-selection) optimizes both quality and cost without you having to think about it. You can save up to 60% on AI costs while maintaining excellent results!
@@ -686,19 +601,6 @@ python
 - Verify database file exists
 - Test API endpoints directly using curl or Postman
 
-### Git/GitHub Issues
-
-**Problem**: Git not initialized
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
-
-**Problem**: GitHub authentication fails
-- Verify GitHub MCP is configured in Bob
-- Check GitHub personal access token
-- Try manual git push to test credentials
 
 ## Additional Resources
 

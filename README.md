@@ -108,13 +108,12 @@ Build a complete full-stack application from scratch using Bob's AI-powered feat
 - ✅ Code Mode for implementation
 - ✅ Auto-approvals for rapid development
 - ✅ Literate coding for self-documenting code
-- ✅ GitHub integration (optional)
 
 **What you'll learn:**
 - Switching between Bob's modes effectively
 - Using auto-approvals safely
 - Building full-stack applications with AI
-- Version control with Bob
+- Rapid prototyping with Bob
 
 **[Start Lab 2 →](lab2/README.md)**
 
