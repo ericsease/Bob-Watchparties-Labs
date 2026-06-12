@@ -10,7 +10,7 @@ These labs are designed to give you hands-on experience with Bob's core features
 2. **Lab 2: Beginner - Building a Todo Application** - Create a full-stack application from scratch
 3. **Lab 3: Advanced - Financial Security Analysis** - Identify and fix security vulnerabilities
 
-**Total Learning Time**: ~2 hours
+**Total Learning Time**: ~60 minutes (choose your favorite lab!)
 
 ## 🚀 Quick Start
 
