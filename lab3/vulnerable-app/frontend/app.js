@@ -1,12 +1,6 @@
 /**
- * Todo Application - VULNERABLE VERSION
- * This code contains intentional XSS vulnerabilities for educational purposes.
- * DO NOT use this code in production!
- * 
- * Vulnerabilities:
- * - Using innerHTML with user content (XSS)
- * - No input sanitization
- * - Direct DOM manipulation with user data
+ * Todo Application
+ * A simple frontend for managing todos.
  */
 
 const API_URL = 'http://localhost:5000/api/todos';
@@ -19,7 +13,7 @@ let appState = {
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Todo App initialized (VULNERABLE VERSION)');
+    console.log('🚀 Todo App initialized');
     setupEventListeners();
     fetchTodos();
 });
@@ -142,11 +136,6 @@ async function deleteTodo(todoId) {
     }
 }
 
-/**
- * VULNERABILITY: XSS through innerHTML
- * This function uses innerHTML to render user content, which allows
- * script injection if the user enters malicious HTML/JavaScript
- */
 function displayTodos(todos) {
     const todosList = document.getElementById('todos-list');
     const emptyState = document.getElementById('empty-state');
@@ -163,7 +152,6 @@ function displayTodos(todos) {
     
     emptyState.style.display = 'none';
     
-    // VULNERABILITY: Using innerHTML with user content
     todosList.innerHTML = todos.map(todo => createTodoHTML(todo)).join('');
     
     // Attach event listeners
@@ -183,11 +171,6 @@ function displayTodos(todos) {
     });
 }
 
-/**
- * VULNERABILITY: Direct HTML injection
- * This function creates HTML with user input without any sanitization
- * Allows XSS attacks through todo.title and todo.description
- */
 function createTodoHTML(todo) {
     const date = new Date(todo.created_at);
     const formattedDate = date.toLocaleDateString('en-US', {
@@ -201,8 +184,6 @@ function createTodoHTML(todo) {
     const completedClass = todo.completed ? 'completed' : '';
     const buttonText = todo.completed ? '↩️ Undo' : '✓ Complete';
     
-    // VULNERABILITY: Direct insertion of user content into HTML
-    // If todo.title contains <script>alert('XSS')</script>, it will execute!
     return `
         <div class="todo-item ${completedClass}">
             <div class="todo-header">
@@ -212,15 +193,15 @@ function createTodoHTML(todo) {
             <div class="todo-meta">
                 <span class="todo-date">📅 ${formattedDate}</span>
                 <div class="todo-actions">
-                    <button 
-                        class="btn btn-success" 
+                    <button
+                        class="btn btn-success"
                         data-id="${todo.id}"
                         data-completed="${todo.completed}"
                     >
                         ${buttonText}
                     </button>
-                    <button 
-                        class="btn btn-danger" 
+                    <button
+                        class="btn btn-danger"
                         data-id="${todo.id}"
                     >
                         🗑️ Delete
@@ -263,22 +244,5 @@ function clearForm() {
     document.getElementById('todo-description').value = '';
     document.getElementById('todo-title').focus();
 }
-
-console.log('⚠️ VULNERABLE VERSION - Contains XSS vulnerabilities!');
-
-/**
- * HOW TO TEST THE XSS VULNERABILITY:
- * 
- * 1. Create a todo with this title:
- *    <img src=x onerror="alert('XSS Attack!')">
- * 
- * 2. Create a todo with this title:
- *    <script>alert('XSS')</script>
- * 
- * 3. Create a todo with this description:
- *    <img src=x onerror="document.body.innerHTML='<h1>Hacked!</h1>'">
- * 
- * These will execute JavaScript when the todo is displayed!
- */
 
 // Made with Bob

@@ -357,24 +357,6 @@ API_KEY=sk_live_abc123xyz789
 SECRET_KEY=my-secret-key-12345
 ```
 
-### 3.4: Testing Vulnerabilities
-
-**⚠️ WARNING**: Only test on your own systems!
-
-**Test SQL Injection:**
-```bash
-# Try to inject SQL
-curl "http://localhost:5000/api/todos/search?q=test'%20OR%20'1'='1"
-```
-
-**Test XSS:**
-```bash
-# Create todo with script
-curl -X POST http://localhost:5000/api/todos \
-  -H "Content-Type: application/json" \
-  -d '{"title":"<script>alert(\"XSS\")</script>","description":"test"}'
-```
-
 ---
 
 ## Step 4: Implementing Fixes with Code Mode (10 minutes)
