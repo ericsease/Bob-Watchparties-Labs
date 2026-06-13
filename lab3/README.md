@@ -413,11 +413,15 @@ Validate:
 Return appropriate error messages for invalid input.
 ```
 
-### 4.6: Verify Fixes
+### 4.6: Verify Fixes (Optional)
 
-**Important**: Bob has made the fixes directly to the files in `lab2/vulnerable-app/` (not in a separate solution folder). The vulnerable code has been replaced with secure code.
+**Important**: Bob has made the fixes directly to the files in `lab3/vulnerable-app/` (not in a separate solution folder). The vulnerable code has been replaced with secure code.
 
-Run the application and test the fixes:
+If you want to run the application and test the fixes:
+
+> **💡 Pro Tip: Use Advanced Mode for Terminal Commands**
+>
+> Switch to **Advanced mode** (🔧) which is expert at running terminal commands. Copy the entire bash code block below and paste it into Bob. He'll execute the commands and automatically handle any issues that come up (like missing dependencies, port conflicts, or environment setup problems). This is a great way to see Bob's automation capabilities in action!
 
 ```bash
 # Start backend (from the vulnerable-app directory where fixes were applied)
@@ -433,11 +437,8 @@ cd ../frontend
 # Open index.html in browser
 ```
 
-**Test Security:**
-1. Try SQL injection - should fail safely (no data leaked)
-2. Try XSS payload - should display as plain text (not execute)
-3. Check no secrets in code (verify config.py uses environment variables)
-4. Test input validation (try empty title, too long title, etc.)
+**Review Your Fixes:**
+Once the app is running, you can verify that Bob's security fixes are working by using the application normally. The key achievement is that Bob identified and fixed the vulnerabilities in the code - the actual runtime testing is optional.
 
 **Compare Before/After:**
 If you want to see the original vulnerable code, you can review the git history or ask Bob to explain what the vulnerabilities were before the fixes.
