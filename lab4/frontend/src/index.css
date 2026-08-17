@@ -1,0 +1,134 @@
+/* ============================================================
+   RepoRadar — global styles
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --tag-bg: #1f2f47;
+  --radius: 8px;
+  --font: -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ── Layout ─────────────────────────────────────────────── */
+
+.app-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+header {
+  margin-bottom: 28px;
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+header p {
+  color: var(--muted);
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* ── Repo list ───────────────────────────────────────────── */
+
+.repo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Repo card ───────────────────────────────────────────── */
+
+.repo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s ease;
+}
+
+.repo-card:hover {
+  border-color: var(--accent);
+}
+
+.repo-card__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.repo-card__title a {
+  color: var(--accent);
+}
+
+.repo-card__desc {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.repo-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.lang-tag {
+  background: var(--tag-bg);
+  color: var(--accent);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Empty / loading states ─────────────────────────────── */
+
+.state-message {
+  color: var(--muted);
+  text-align: center;
+  padding: 48px 0;
+  font-size: 15px;
+}
