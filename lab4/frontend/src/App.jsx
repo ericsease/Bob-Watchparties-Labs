@@ -24,7 +24,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app-shell">
+    <div className="page-wrapper">
       <header>
         <h1>📡 RepoRadar</h1>
         <p>Trending open-source repos — updated daily</p>
@@ -34,10 +34,12 @@ export default function App() {
       {error && <p className="state-message">Error: {error}</p>}
 
       {!loading && !error && (
-        <>
+        <div className="app-shell">
           <Sidebar />
-          <RepoList repos={repos} />
-        </>
+          <div className="main-content">
+            <RepoList repos={repos} />
+          </div>
+        </div>
       )}
     </div>
   );

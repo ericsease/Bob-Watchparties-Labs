@@ -61,7 +61,7 @@ You should see:
 
 ```
 Seeded 10 repos.
- * Running on http://127.0.0.1:5000
+ * Running on http://127.0.0.1:5001
 ```
 
 ### 3. Start the frontend
@@ -282,10 +282,12 @@ At the end of the lab you should have:
 | Problem | Fix |
 |---|---|
 | Backend won't start — `ModuleNotFoundError` | Make sure you activated the venv: `source venv/bin/activate` |
-| Frontend can't reach backend | Confirm Flask is running on port 5000; check `vite.config.js` proxy setting |
+| Frontend shows "Failed to fetch repos" on macOS | macOS AirPlay Receiver occupies port 5000. This project uses port 5001 — confirm Flask started on 5001 |
+| Frontend can't reach backend | Confirm Flask is running on port 5001; check `vite.config.js` proxy setting |
 | `npm install` fails | Make sure you're on Node 18+: `node --version` |
 | Bookmark button appears but doesn't save | Check the browser console for a failed `POST /api/bookmarks` call; confirm Flask is running |
 | SQLite file missing | Delete `reporadar.db` if it's corrupted and restart Flask — it will re-seed |
+| `LegacyAPIWarning` in Flask terminal | Bob generated `Model.query.get(id)` — ask Bob to replace it with `db.session.get(Model, id)` (SQLAlchemy 2.x API) |
 | Bob keeps asking questions instead of acting | Make sure you're in **Agent** mode, not Plan mode, for Act 2 |
 
 ---
