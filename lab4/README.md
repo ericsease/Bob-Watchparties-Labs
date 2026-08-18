@@ -170,6 +170,37 @@ using pytest and Flask's test client.
 
 ---
 
+### Step 5.5 — Restart both servers to pick up the changes
+
+Once Bob signals it has finished implementing, the servers need a restart before the new feature is visible in the browser. Flask must re-run `db.create_all()` to create the `bookmarks` table; the browser needs a hard refresh to load the updated components.
+
+**Option A — Ask Bob to do it (recommended)**
+
+```
+The implementation looks complete. Please restart both servers for me:
+kill the Flask process and restart it from lab4/backend, then confirm
+the bookmarks table was created. I'll restart Vite manually.
+```
+
+> 🎤 **Presenter note:** Bob will run `pkill`/`kill` on the Flask process and relaunch it — another live example of agentic shell use. Hand Vite the manual restart (Ctrl+C → `npm run dev`) so participants see both paths.
+
+**Option B — Manual restart**
+
+```bash
+# Terminal 1 — Flask
+pkill -f "python.*app.py"; sleep 1
+cd lab4/backend && source venv/bin/activate && python app.py
+
+# Terminal 2 — Vite (Ctrl+C first, then)
+cd lab4/frontend && npm run dev
+```
+
+Then **hard-refresh** the browser (`Cmd+Shift+R` on macOS / `Ctrl+Shift+R` on Windows).
+
+> ✅ **You should now see:** ⭐ buttons on every repo card and **"No bookmarks yet."** in the sidebar panel. If you see `Error: Failed to fetch bookmarks`, Flask didn't restart cleanly — check Terminal 1.
+
+---
+
 ## 🎛️ Act 3 — Control Without Babysitting `[0:15 – 0:23]`
 
 > 🎤 **Presenter note:** The most common concern about AI doing more autonomously is "how do I stay in control?" Show the answer: Bob makes small safe changes freely, but surfaces a gate when something needs a decision.
