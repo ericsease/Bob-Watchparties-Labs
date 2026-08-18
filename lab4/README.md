@@ -61,7 +61,7 @@ You should see:
 
 ```
 Seeded 10 repos.
- * Running on http://127.0.0.1:5000
+ * Running on http://127.0.0.1:5001
 ```
 
 ### 3. Start the frontend
@@ -167,6 +167,37 @@ using pytest and Flask's test client.
 > 👤 **What to look for:** Bob's response will mention delegating the test writing. The main conversation continues — you can keep chatting, asking questions, reviewing what Bob has done so far — while the tests are being generated independently.
 
 > 🎤 **Presenter note:** While waiting, walk the audience through what's been built so far: the new `Bookmark` model, the `/api/bookmarks` routes, the updated `RepoCard.jsx`. Show the parallel work that already happened.
+
+---
+
+### Step 5.5 — Restart both servers to pick up the changes
+
+Once Bob signals it has finished implementing, the servers need a restart before the new feature is visible in the browser. Flask must re-run `db.create_all()` to create the `bookmarks` table; the browser needs a hard refresh to load the updated components.
+
+**Option A — Ask Bob to do it (recommended)**
+
+```
+The implementation looks complete. Please restart both servers for me:
+kill the Flask process and restart it from lab4/backend, then confirm
+the bookmarks table was created. I'll restart Vite manually.
+```
+
+> 🎤 **Presenter note:** Bob will run `pkill`/`kill` on the Flask process and relaunch it — another live example of agentic shell use. Hand Vite the manual restart (Ctrl+C → `npm run dev`) so participants see both paths.
+
+**Option B — Manual restart**
+
+```bash
+# Terminal 1 — Flask
+pkill -f "python.*app.py"; sleep 1
+cd lab4/backend && source venv/bin/activate && python app.py
+
+# Terminal 2 — Vite (Ctrl+C first, then)
+cd lab4/frontend && npm run dev
+```
+
+Then **hard-refresh** the browser (`Cmd+Shift+R` on macOS / `Ctrl+Shift+R` on Windows).
+
+> ✅ **You should now see:** ⭐ buttons on every repo card and **"No bookmarks yet."** in the sidebar panel. If you see `Error: Failed to fetch bookmarks`, Flask didn't restart cleanly — check Terminal 1.
 
 ---
 
@@ -282,10 +313,12 @@ At the end of the lab you should have:
 | Problem | Fix |
 |---|---|
 | Backend won't start — `ModuleNotFoundError` | Make sure you activated the venv: `source venv/bin/activate` |
-| Frontend can't reach backend | Confirm Flask is running on port 5000; check `vite.config.js` proxy setting |
+| Frontend shows "Failed to fetch repos" on macOS | macOS AirPlay Receiver occupies port 5000. This project uses port 5001 — confirm Flask started on 5001 |
+| Frontend can't reach backend | Confirm Flask is running on port 5001; check `vite.config.js` proxy setting |
 | `npm install` fails | Make sure you're on Node 18+: `node --version` |
 | Bookmark button appears but doesn't save | Check the browser console for a failed `POST /api/bookmarks` call; confirm Flask is running |
 | SQLite file missing | Delete `reporadar.db` if it's corrupted and restart Flask — it will re-seed |
+| `LegacyAPIWarning` in Flask terminal | Bob generated `Model.query.get(id)` — ask Bob to replace it with `db.session.get(Model, id)` (SQLAlchemy 2.x API) |
 | Bob keeps asking questions instead of acting | Make sure you're in **Agent** mode, not Plan mode, for Act 2 |
 
 ---

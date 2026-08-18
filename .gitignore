@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Lab working/scratch files
+lab4/patch-findings.md
+lab4/CHANGES-FOR-STARTER.md
+lab4-plan.md
+MCP-Workaround/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+*.db
+
+# Node
+node_modules/
+dist/
+.env

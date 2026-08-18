@@ -31,13 +31,14 @@ Build a classic game in pure HTML/CSS/JavaScript:
 
 **Quick Start Prompt:**
 ```
-I want to build a [game name] in HTML, CSS, and JavaScript. 
+I want to build a [game name] in HTML, CSS, and JavaScript.
 Create a single-page game with:
 - Clean, modern UI
 - Game logic and win conditions
 - Score tracking
 - Restart functionality
 Make it playable in the browser without any server.
+Write the output to a file.
 ```
 
 #### 📝 Personal Productivity Tool
@@ -55,6 +56,7 @@ Create a [tool name] web application with:
 - Mobile-responsive design
 - No backend required
 Use vanilla JavaScript or a simple framework.
+Write the output to a file.
 ```
 
 #### 📊 Data Visualization Dashboard
@@ -72,6 +74,7 @@ Build a [dashboard name] that:
 - Updates automatically
 - Includes error handling
 Provide the complete HTML, CSS, and JavaScript.
+Write the output to a file.
 ```
 
 #### 🔌 API Integration Project
@@ -89,6 +92,7 @@ Create a [project name] that uses the [API name]:
 - Handle loading states
 - Include error messages
 Provide API integration code and UI.
+Write the output to a file.
 ```
 
 ---
