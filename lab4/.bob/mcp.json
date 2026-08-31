@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "description": "General-purpose HTTP fetch — lets Bob retrieve any public URL. Used in this lab to pull live GitHub trending data and compare it against RepoRadar's seed repos."
+    }
+  }
+}

@@ -40,6 +40,22 @@ By the end of this lab you will have experienced:
 - Bob IDE (any recent version)
 - Git
 
+### 0. Enable the fetch MCP *(optional but recommended)*
+
+This lab includes a general-purpose MCP that lets Bob fetch live web content.
+It requires Node.js (already a prerequisite) and no API key.
+
+In Bob's MCP settings, point it to the config at `lab4/.bob/mcp.json`, or run
+once to pre-install the package:
+
+```bash
+npx -y @modelcontextprotocol/server-fetch --version
+```
+
+> 🎤 **Presenter note:** *"Before we start — I've added one MCP to this workspace.
+> Not a GitHub-specific one. A general-purpose fetch tool that lets Bob reach any
+> public URL. We'll use it at the end of the lab to pull live data from GitHub."*
+
 ### 1. Open the lab folder in Bob
 
 Open the `lab4/` folder as your workspace in Bob.
@@ -87,6 +103,8 @@ Look at the app — there's no way to bookmark anything. The [`Sidebar.jsx`](fro
 ## 🎬 Act 1 — Orient & Plan `[0:00 – 0:05]`
 
 > 🎤 **Presenter note:** In Bob v1, you'd start a task and Bob would ask 3–4 clarifying questions before doing anything. Bob v2 is different — it reasons through what it knows, then acts. Show this contrast explicitly.
+
+> 🎤 **Presenter note — Rules:** *"One thing I've set up before this session: a custom rule file in `.bob/rules/`. It tells Bob to always use the SQLAlchemy 2.x `db.session.get()` API instead of the deprecated `Model.query.get()` form. Watch — when Bob writes the bookmark endpoints, it will follow that rule automatically without being told. That's the difference between a rule and a comment in code."*
 
 ### Step 1 — Switch to Plan mode
 
@@ -290,6 +308,47 @@ for the changes you just made. Include:
 ```
 
 > 🎤 **Presenter note:** Bob reads the actual diff and produces a real PR description — not a template. Show participants the output. This is what you'd paste into GitHub, Bitbucket, or Azure DevOps.
+
+---
+
+### Bonus — Live data with the fetch MCP *(if time permits, ~2 min)*
+
+> 🎤 **Presenter note:** *"Before we wrap — remember that fetch MCP I mentioned at the start?
+> Let me show you one thing it enables."*
+
+```
+Use the fetch tool to retrieve https://github.com/trending?spoken_language_code=en
+and compare the top 5 repos there against the repos currently seeded in RepoRadar.
+Suggest 3 repos from the live trending list that would make good additions to our seed data.
+```
+
+> 👤 **What to look for:** Bob makes a live HTTP request, reads the page, and reasons over it in context. The audience sees Bob connecting to the real world — not just the local codebase.
+
+> 🎤 **Presenter note:** *"This MCP isn't GitHub-specific. It can hit your internal wiki,
+> a Confluence page, a public API spec — anything with a URL. That's the power of
+> general-purpose MCP connections."*
+
+---
+
+## 🔮 Going Further — Hooks & Workflows
+
+> 🎤 **Presenter note (voiceover):** *"Everything you've seen today — the parallel execution,
+> subagents, approvals, the PR workflow — these are the building blocks. But there are two
+> more layers worth knowing about."*
+
+**Lifecycle Hooks** let you attach deterministic shell scripts to Bob's actions:
+- A `PreToolUse` hook that scans every file Bob writes for hardcoded secrets — and **blocks** the write if it finds one
+- A `SessionStart` hook that injects your git branch, environment info, and project context into Bob automatically at the start of every session
+- A `PostToolUse` hook that logs every shell command Bob runs to an audit file
+
+*"Imagine a rule that says: Bob can never write a file outside `src/`. Or: before any commit, run the linter. These are hard guardrails — not prompt suggestions."*
+
+**Custom Workflows** let you define multi-step sequences Bob can execute with a single `/` command:
+- The **Create PR** workflow you just saw is a built-in example
+- You can author your own: `/deploy-to-staging`, `/run-security-scan`, `/generate-changelog`
+- Each workflow is a structured prompt sequence that Bob follows reliably every time
+
+*"The combination is what makes Bob a full SDLC partner. Write code in parallel with subagents, enforce team standards via rules, gate risky actions with hooks, and ship with reproducible workflows. All in one session."*
 
 ---
 
