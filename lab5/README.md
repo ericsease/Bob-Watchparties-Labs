@@ -100,7 +100,7 @@ In Bob's MCP settings, add the fetch server from `lab5/.bob/mcp.json`:
 
 ```bash
 # Verify Node.js can resolve the package
-npx -y @modelcontextprotocol/server-fetch --version
+npx -y mcp-fetch-server --help
 ```
 
 > 🎤 **Presenter note:** *"We've also added a general-purpose MCP — not GitHub-specific.
