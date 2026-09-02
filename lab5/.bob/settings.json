@@ -1,0 +1,38 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "write_file|apply_diff|search_and_replace|insert_content",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .bob/hooks/check-secrets.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "execute_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .bob/hooks/log-commands.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh .bob/hooks/session-context.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
