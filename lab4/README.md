@@ -49,7 +49,7 @@ In Bob's MCP settings, point it to the config at `lab4/.bob/mcp.json`, or run
 once to pre-install the package:
 
 ```bash
-npx -y @modelcontextprotocol/server-fetch --version
+npx -y mcp-fetch-server --help
 ```
 
 > 🎤 **Presenter note:** *"Before we start — I've added one MCP to this workspace.
@@ -104,7 +104,7 @@ Look at the app — there's no way to bookmark anything. The [`Sidebar.jsx`](fro
 
 > 🎤 **Presenter note:** In Bob v1, you'd start a task and Bob would ask 3–4 clarifying questions before doing anything. Bob v2 is different — it reasons through what it knows, then acts. Show this contrast explicitly.
 
-> 🎤 **Presenter note — Rules:** *"One thing I've set up before this session: a custom rule file in `.bob/rules/`. It tells Bob to always use the SQLAlchemy 2.x `db.session.get()` API instead of the deprecated `Model.query.get()` form. Watch — when Bob writes the bookmark endpoints, it will follow that rule automatically without being told. That's the difference between a rule and a comment in code."*
+> 🎤 **Presenter note — Rules:** *"One thing I've set up before this session: a custom rule file at `.bob/rules/reporadar-standards.md`. It covers three things. First, SQLAlchemy API hygiene — Bob must use `db.session.get()` instead of the deprecated `Model.query.get()` form, which would generate a `LegacyAPIWarning` in every test run. Second, a style contract — no service layer, explicit status codes, docstrings on every new route. And third — the one that actually saved us during development — a mandatory cleanup step: any time Bob adds a column or a new model, it must delete `instance/reporadar.db` before calling the implementation done. Without that rule, `db.create_all()` silently leaves the old schema on disk and the first request crashes with a 500. We hit that exact error live and then encoded the fix as a rule so it can never happen again. Watch — Bob will apply all three automatically, without being told, every time it touches this codebase."*
 
 ### Step 1 — Switch to Plan mode
 
@@ -272,7 +272,31 @@ In your browser, hard-refresh **http://localhost:5173**.
 
 ## 🚀 Act 4 — Ship It `[0:23 – 0:28]`
 
-> 🎤 **Presenter note:** The code is done. Show how Bob handles the "last mile" of shipping — creating a PR. Two options: the full GitHub workflow (for participants who have a GitHub repo set up), or a plain-text description (for everyone else).
+> 🎤 **Presenter note:** The code is done. Two things happen in this act: first a pre-merge quality gate via a custom `/health-check` workflow, then the PR itself. The health check is worth showing first — it demonstrates that workflows aren't just for shipping, they're for enforcing standards automatically.
+
+### Step 9.5 — Run the `/health-check` workflow
+
+Type `/` in the Bob chat to open the workflow picker, then select **health-check**:
+
+```
+/health-check
+```
+
+Bob will run four checks in sequence, narrating each one:
+1. **Test suite** — runs `pytest` on the bookmarks test file
+2. **Rule compliance** — reads `app.py` and `models.py` and checks them against `.bob/rules/reporadar-standards.md` (deprecated API usage, missing docstrings, bare dict returns)
+3. **Schema drift** — checks whether a stale `instance/reporadar.db` exists on disk
+4. **API smoke tests** — fires live `curl` commands at the running Flask server: `GET /api/bookmarks`, `POST /api/bookmarks`, `DELETE /api/bookmarks/<id>`
+
+It then produces a single ✅ / ❌ verdict table.
+
+> 🎤 **Presenter note:** *"This workflow lives in `.bob/workflows/health-check.md` — a markdown file I wrote that describes what to check and how to report it. That's all a custom workflow is. Bob reads it when I type `/health-check` and follows it as a structured sequence. I could write `/deploy-to-staging` or `/security-scan` the same way. The point is: this quality gate now runs the same way every time, for every person doing this lab, without anyone having to remember the steps."*
+
+> 👤 **What to look for:** Bob runs shell commands live (pytest, curl), reads source files, and assembles results into the verdict table — all driven by the workflow file. The audience sees the `/` command picker, the narrated steps, and the final report in one flow.
+
+---
+
+> 🎤 **Presenter note:** The code is done and the health check passed. Show how Bob handles the "last mile" — creating a PR. Two options: the full GitHub workflow (for participants who have a GitHub repo set up), or a plain-text description (for everyone else).
 
 ### Option A — Bob's Create PR Workflow *(if you have GitHub configured)*
 
@@ -344,9 +368,10 @@ Suggest 3 repos from the live trending list that would make good additions to ou
 *"Imagine a rule that says: Bob can never write a file outside `src/`. Or: before any commit, run the linter. These are hard guardrails — not prompt suggestions."*
 
 **Custom Workflows** let you define multi-step sequences Bob can execute with a single `/` command:
-- The **Create PR** workflow you just saw is a built-in example
+- The **`/health-check`** command you just ran is a custom example — a markdown file in `.bob/commands/` that Bob treats as a structured checklist
+- The **Create PR** workflow is a built-in example
 - You can author your own: `/deploy-to-staging`, `/run-security-scan`, `/generate-changelog`
-- Each workflow is a structured prompt sequence that Bob follows reliably every time
+- Each workflow is a markdown file describing the steps — Bob reads and follows it reliably every time
 
 *"The combination is what makes Bob a full SDLC partner. Write code in parallel with subagents, enforce team standards via rules, gate risky actions with hooks, and ship with reproducible workflows. All in one session."*
 
@@ -364,6 +389,7 @@ At the end of the lab you should have:
 - [ ] Unit tests in `lab4/backend/tests/test_bookmarks.py`
 - [ ] A PR description (as a GitHub PR or as text)
 - [ ] You witnessed parallel tool calls, a subagent, and a checkpoint gate
+- [ ] The `/health-check` workflow returned a "Ready to ship ✅" verdict
 
 ---
 
