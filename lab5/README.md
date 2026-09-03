@@ -281,7 +281,7 @@ Show me the Dockerfile for the inventory service and explain the multi-stage bui
 ### Step 14 — Use the fetch MCP to query live migration docs
 
 ```
-Use the fetch tool to retrieve https://spring.io/blog/2022/05/24/spring-boot-3-0-m3-available-now
+Use the fetch tool to retrieve https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide
 Summarize the breaking changes that are relevant to our inventory-service.
 Which changes should we address before upgrading from Spring Boot 2.7 to 3.x?
 ```
