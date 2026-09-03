@@ -45,16 +45,19 @@ if echo "$CONTENT" | grep -qiE "$PATTERNS"; then
   exit 2
 fi
 
-# Also scan the target file if it already exists on disk
+# Also scan the target file if it already exists on disk.
+# If the file already has a secret pattern, block ANY write to it — the demo
+# depends on this path firing when Bob tries to edit application.properties.
 if [ -n "$FILE_PATH" ] && [ -f "$FILE_PATH" ]; then
   if grep -qiE "$PATTERNS" "$FILE_PATH" 2>/dev/null; then
     MATCHED=$(grep -iE "$PATTERNS" "$FILE_PATH" | head -3)
-    echo "🔒 HOOK WARNING: Existing secrets found in $FILE_PATH" >&2
+    echo "🔒 HOOK BLOCKED: Existing secrets found in $FILE_PATH" >&2
     echo "   Matched line(s):" >&2
     echo "$MATCHED" | sed 's/^/   /' >&2
     echo "" >&2
-    echo "   This file already contains hardcoded credentials. Consider externalizing them." >&2
-    # Warning only — don't block on existing file (only block on new writes)
+    echo "   This file already contains hardcoded credentials." >&2
+    echo "   Externalize them to environment variables before making any further edits." >&2
+    exit 2
   fi
 fi
 
