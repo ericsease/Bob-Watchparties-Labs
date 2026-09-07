@@ -204,42 +204,41 @@ for InventoryController. Place tests in lab5/service/src/test/java/com/example/i
 
 ## 🔒 Act 3 — Hooks + CI Pipeline [0:25 – 0:33]
 
-> 🎤 **Presenter note:** *"Before we add CI, let me show you something that just happened.
-> Bob tried to write application.properties earlier. Let me trigger the hook deliberately
-> so you can see what deterministic guards look like in practice."*
+> 🎤 **Presenter note:** *"Before we add CI, let me show you something. I've wired a custom
+> hook to Bob's tool calls. Every time Bob tries to write a pom.xml, the hook intercepts it,
+> validates the proposed content with Maven before anything hits disk, and blocks the write if
+> validation fails — sending the compiler error straight back to Bob so it can fix itself."*
 
-### Step 10 — Trigger the secret-scanning hook
+### Step 10 — Trigger the POM validation hook
 
 ```
-Update application.properties to change the H2 console path to /admin/h2-console.
-Keep all other values the same.
+Bump the Spring Boot parent version to 3.2.0 and update the Java source/target to 17 in pom.xml.
 ```
 
 > 👤 **What to look for:**
-> - Bob tries to use a write tool on `application.properties`
-> - The `check-secrets.sh` hook fires **before** the write completes
-> - Bob sees the hook's block message (exit 2) and reports it in chat
-> - Bob automatically pivots: "I notice there's a hardcoded password in this file.
->   Let me externalize it to an environment variable first."
+> - Bob attempts `write_file` on `pom.xml`
+> - The `validate-pom.sh` hook fires **before** the write completes
+> - Hook runs `mvn validate` against the proposed content in a temp directory — the real file is never touched
+> - Valid POM → `✅ pom.xml validated successfully.` — write goes through cleanly
+> - If Bob produces an invalid POM → `🔒 HOOK BLOCKED` with the Maven error in chat — Bob reads the error and self-corrects
 
-> 🎤 **Presenter note:** *"The hook didn't just warn — it blocked. Bob couldn't write that
-> file until the secret was gone. This is deterministic code running inside an AI workflow.
-> No prompt engineering required. It's a hard rule."*
+> 🎤 **Presenter note:** *"This is the self-correction loop. Bob didn't just get blocked — it
+> got the compiler error back. It can read that output and fix itself. That's behaviour you
+> cannot get from prompt engineering alone. The hook is a shell script. It runs deterministically
+> inside the AI workflow every single time."*
 
-> 🎤 **Presenter note for SAP audience:** *"Think about what this means for SAP BTP deployments.
-> Every time someone asks Bob to touch a config file, your credential policy enforces itself.
-> Automatically."*
+> 🎤 **Presenter note for SAP audience:** *"Imagine this on your BTP extension pipeline. Every
+> POM write validated before it reaches disk. Every bad dependency coordinate caught before the
+> build even starts. Bob writes the fix, the hook verifies it, the loop closes automatically."*
 
-### Step 11 — Fix the secret properly
+### Step 11 — Verify the hook passed and the service still starts
 
 ```
-Externalize spring.datasource.password to an environment variable.
-Update application.properties to use ${DB_PASSWORD:changeme} as the value.
-Create a .env.example file showing how to set DB_PASSWORD.
+Run mvn spring-boot:run from lab5/service and confirm the service starts cleanly on the updated POM.
 ```
 
-> ✅ **You should see:** Bob writes the file successfully this time — no hook block.
-> The command log at `.bob/hooks/command-log.txt` shows the command audit trail.
+> ✅ **You should see:** Maven resolves the Spring Boot 3.2.0 parent and the service starts.
+> The command log at `.bob/hooks/command-log.txt` shows the hook and command audit trail.
 
 ### Step 12 — Bob generates the GitHub Actions CI pipeline
 
@@ -352,8 +351,8 @@ By the end of the lab, the presenter should have demonstrated:
 - [ ] Bob operating in **☕ Java Architect** mode with `java-modernization` skill active
 - [ ] `InventoryItem.java` modernized from 96-line POJO to a Java record
 - [ ] `InventoryService.java` refactored from for-loops to Stream API
-- [ ] Secret-scanning hook **blocked** Bob from writing a file with `password=` in it
-- [ ] `application.properties` updated to use `${DB_PASSWORD}` environment variable
+- [ ] POM validation hook **blocked** Bob from writing an invalid `pom.xml` and returned the Maven error to chat
+- [ ] Bob self-corrected after reading the hook's error output and retried successfully
 - [ ] GitHub Actions `ci.yml` generated with 3 jobs (build, scan, docker)
 - [ ] Fetch MCP used to retrieve live Spring Boot migration docs
 - [ ] PR description generated covering all changes
@@ -368,7 +367,7 @@ By the end of the lab, the presenter should have demonstrated:
 | Java version mismatch | `mvn spring-boot:run` fails with `source 8 not supported` | Run with `JAVA_HOME` pointing to a JDK that supports `--release 8` (JDK 17 is fine — it supports source 8) |
 | Maven not found | `command not found: mvn` | Install Maven 3.9: `brew install maven` or download from maven.apache.org |
 | Port 8080 in use | `Web server failed to start. Port 8080 was already in use` | `lsof -i :8080` then `kill -9 <PID>`, or add `server.port=8081` temporarily |
-| Hook not firing | Bob writes files without triggering secret scan | Verify `chmod +x lab5/.bob/hooks/*.sh` and that Bob's workspace root is the repo root (not a subdirectory) |
+| Hook not firing | Bob writes `pom.xml` without triggering validation | Verify `chmod +x lab5/.bob/hooks/*.sh` and that Bob's workspace root is the repo root (not a subdirectory) |
 | MCP fetch error | Bob says "fetch tool not available" | Run `npx -y @modelcontextprotocol/server-fetch` once to install, then restart Bob |
 | Dashboard connection error | `⚠ Cannot reach http://localhost:8080` | Java service isn't running — go to the service terminal and run `mvn spring-boot:run` |
 
