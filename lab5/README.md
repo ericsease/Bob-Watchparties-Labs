@@ -1,23 +1,24 @@
 # Lab 5 — Bob as Your Java Modernization Partner
 
-**Duration:** 35–45 minutes | **Difficulty:** Intermediate | **Audience:** Enterprise Java / SAP developers
+**Duration:** 45–55 minutes | **Difficulty:** Intermediate | **Audience:** Enterprise Java developers
 
-> 🎯 **Presenter context:** This lab is pitched at developers who live in enterprise Java daily —
-> SAP BTP extensions, S/4HANA integrations, Spring Boot microservices. They've seen AI demos before.
-> The goal is to show Bob as a *senior engineering partner* across the **full SDLC**, not just a
-> code autocomplete tool. Every act demonstrates a capability SAP developers wish they had last week.
+> 🎯 **Presenter context:** This lab is aimed at developers who work with legacy Java services
+> and want to see Bob as a *senior engineering partner* across the **full SDLC**, not just a
+> code autocomplete tool. Every act demonstrates a capability that enterprise Java teams wish
+> they had last week.
 
 ---
 
 ## 🎯 What You'll Learn
 
-1. **Custom modes** — switch Bob's persona to a "Java Architect" who enforces Java 17+ best practices
-2. **Skills** — load a `java-modernization` playbook so Bob knows migration patterns before touching code
-3. **Parallel subagents** — spawn a Security Auditor and a Test Engineer running simultaneously
-4. **Lifecycle hooks** — deterministic guards that block Bob from writing hardcoded secrets
-5. **GitHub Actions CI** — Bob generates a complete pipeline from a single prompt
-6. **General-purpose MCP** — Bob fetches live Spring Boot migration docs from the web
-7. **Full SDLC** — assessment → migration → tests → CI/CD → containerization → PR in one session
+1. **Plan mode first** — use Bob's standard Plan mode to orient before activating any specialist tooling
+2. **Custom modes** — switch Bob's persona to a "Java Architect" who enforces Java 17+ best practices and see the difference it makes
+3. **Skills** — walk through a `java-modernization` playbook and watch Bob apply its rules automatically
+4. **Parallel subagents** — spawn a Security Auditor and a Test Engineer running simultaneously
+5. **Lifecycle hooks** — deterministic guards that validate POM changes before they hit disk, with a self-correction loop
+6. **GitHub Actions CI** — Bob generates a complete pipeline from a single prompt
+7. **General-purpose MCP** — Bob fetches live Spring Boot migration docs from the web
+8. **Full SDLC** — assessment → migration → verify → CI/CD → containerization → PR in one session
 
 ---
 
@@ -25,12 +26,12 @@
 
 | Act | Time | Focus | Key Bob Feature |
 |-----|------|-------|-----------------|
-| Setup | 0:00 – 0:07 | Start services, configure Bob | Custom mode + skill activation |
-| Act 1 | 0:07 – 0:15 | Assess legacy codebase | Parallel reads, assessment plan |
-| Act 2 | 0:15 – 0:25 | Modernize Java 8 → 17 | Parallel subagents, hooks |
-| Act 3 | 0:25 – 0:33 | Add CI pipeline + Dockerfile | GitHub Actions generation |
-| Act 4 | 0:33 – 0:40 | MCP + ship via PR | Fetch MCP, PR workflow |
-| Act 5 | 0:40 – 0:45 | Freestyle / audience Q&A | Open demo |
+| Setup | 0:00 – 0:07 | Start services, configure Bob | Mode switching, skill setup |
+| Act 1 | 0:07 – 0:17 | Plan mode orient → expert mode assess | Before/after custom mode contrast |
+| Act 2 | 0:17 – 0:28 | Modernize Java 8 → 17 + verify | Parallel subagents, test loop |
+| Act 3 | 0:28 – 0:37 | Hooks + CI pipeline | POM hook, GitHub Actions generation |
+| Act 4 | 0:37 – 0:44 | MCP + ship via PR | Fetch MCP, PR workflow |
+| Act 5 | 0:44 – 0:50 | Freestyle / audience Q&A | Open demo |
 
 ---
 
@@ -84,15 +85,15 @@ python watch.py
 chmod +x lab5/.bob/hooks/*.sh
 ```
 
-### Step 4 — Open Bob and switch to Java Architect mode
+### Step 4 — Open Bob in Plan mode *(do NOT switch to Java Architect yet)*
 
 1. Open the `lab5/` directory (or repo root) in Bob
-2. Click the mode selector → choose **☕ Java Architect**
-3. Confirm the mode badge changes in the UI
+2. Make sure you are in **Plan** mode — the contrast with Java Architect mode in Act 1 is the point
+3. Confirm the mode badge shows Plan
 
-> 🎤 **Presenter note:** Say — *"Before I even type a prompt, I've switched Bob into a specialised
-> persona. Java Architect mode primes Bob with Java 17 best practices and tells it to always propose
-> a migration plan before touching code. It's like assigning a senior architect to your team."*
+> 🎤 **Presenter note:** *"We're starting in plain Plan mode — no custom persona, no specialist
+> skill loaded. I want to show you what Bob gives you out of the box, and then what changes
+> when we give it the right context."*
 
 ### Step 5 — Install and enable the fetch MCP
 
@@ -103,19 +104,52 @@ In Bob's MCP settings, add the fetch server from `lab5/.bob/mcp.json`:
 npx -y mcp-fetch-server --help
 ```
 
-> 🎤 **Presenter note:** *"We've also added a general-purpose MCP — not GitHub-specific.
-> This one lets Bob fetch any public URL. In Act 4, we'll use it to pull the Spring Boot
-> migration guide live from spring.io."*
+> 🎤 **Presenter note:** *"We've added a general-purpose MCP — not tied to any specific platform.
+> It lets Bob fetch any public URL. In Act 4, we'll use it to pull the live Spring Boot
+> migration guide and apply it directly to our codebase."*
 
 ---
 
-## 🔍 Act 1 — Orient & Assess [0:07 – 0:15]
+## 🔍 Act 1 — Orient & Assess [0:07 – 0:17]
 
-> 🎤 **Presenter note:** *"The legacy service is running — the dashboard shows live data.
-> Now I'm going to ask Bob to read this codebase and tell me what's wrong with it.
-> Watch how many files it reads simultaneously."*
+> 🎤 **Presenter note:** *"The legacy service is running — the dashboard is showing live data.
+> I'm going to ask Bob to tell me what's wrong with this codebase. But first, I'm going to do
+> it in plain Plan mode — no specialist context. Then I'll activate the Java Architect mode and
+> the java-modernization skill, and we'll see exactly what changes."*
 
-### Step 6 — Activate the java-modernization skill
+### Step 6 — First pass: plain Plan mode assessment
+
+In **Plan mode**, type:
+
+```
+Read the inventory service source files in lab5/service/src/main/java/com/example/inventory/
+and lab5/service/src/main/resources/application.properties.
+Tell me what you'd want to improve in this codebase.
+```
+
+> 👤 **What to look for:**
+> - Bob reads the files and gives a reasonable but generic response
+> - It may mention Java version, tests, or hardcoded values — but without a structured
+>   severity model or specific migration patterns
+> - The output reads like a knowledgeable generalist, not a specialist
+
+> 🎤 **Presenter note:** *"That's a solid response. But notice it's general advice —
+> 'consider adding tests', 'update the Java version'. It doesn't have a framework for
+> Java 8 → 17 migration specifically. Let me change that."*
+
+---
+
+### Step 7 — Switch to Java Architect mode and open the skill
+
+1. Click the mode selector and choose **☕ Java Architect**
+2. Open `.bob/skills/java-modernization/SKILL.md` in the editor and spend 60 seconds reading it aloud with the audience
+
+> 🎤 **Presenter note:** *"This is the skill file. It's a markdown document — not code.
+> It defines seven rules: records over POJOs, LocalDateTime over Date, streams over loops,
+> and so on. When I activate this skill, Bob loads these rules into its context before
+> touching a single file. Watch what the same question produces now."*
+
+### Step 8 — Second pass: expert mode + skill assessment
 
 In the Bob chat, type:
 
@@ -129,13 +163,15 @@ security issues, missing infrastructure, and testability gaps.
 
 > 👤 **What to look for:**
 > - Bob reads **all 5 files simultaneously** (parallel tool calls) — not one at a time
-> - The skill is activated; Bob references the Java 8 → 17 pattern map
-> - Bob calls out the hardcoded `spring.datasource.password=admin123` as a security finding
-> - Output is a structured plan with CRITICAL / HIGH / MEDIUM categories
+> - The output is now a structured plan with CRITICAL / HIGH / MEDIUM severity categories
+> - Bob specifically calls out `InventoryItem` as a record candidate, `java.util.Date` → `LocalDateTime`, for-loops → streams
+> - Bob calls out the hardcoded `spring.datasource.password=admin123` as a CRITICAL security finding
+> - Missing tests, Dockerfile, and CI are listed as infrastructure gaps
 
-> 🎤 **Presenter note:** *"Notice Bob read five files at the same time. v1 would have done
-> them sequentially — one by one. v2 parallelises reads. This is the difference between
-> a junior who works linearly and a senior who can process multiple things at once."*
+> 🎤 **Presenter note:** *"Same question, different answer. The custom mode gave Bob a frame —
+> 'you are a Java architect, here are the rules you enforce'. The skill gave it the specific
+> pattern map. Now it reads five files in parallel and produces a severity-ranked plan.
+> That's the difference between a generalist and a specialist."*
 
 > ✅ **Success check:** Bob's plan includes at minimum:
 > - Migration of `InventoryItem` to a record
@@ -146,13 +182,14 @@ security issues, missing infrastructure, and testability gaps.
 
 ---
 
-## ⚡ Act 2 — Modernize + Parallel Subagents [0:15 – 0:25]
+## ⚡ Act 2 — Modernize + Verify [0:17 – 0:28]
 
-> 🎤 **Presenter note:** *"Now for the part SAP shops dream about. I'm going to ask Bob to
-> start the migration AND spawn two specialist subagents at the same time — one doing a security
-> audit, one writing tests. Three workstreams running in parallel."*
+> 🎤 **Presenter note:** *"We have the plan. Now I'm going to ask Bob to execute it AND
+> spawn two specialist subagents at the same time — one doing a security audit, one writing
+> tests. Three workstreams in parallel. And when the migration is done, we're going to
+> verify it actually works."*
 
-### Step 7 — Spawn the Security Auditor subagent
+### Step 9 — Spawn the Security Auditor subagent
 
 ```
 Read lab5/.bob/personas/security-auditor.md and take on that role as a subagent.
@@ -162,7 +199,7 @@ Perform a full security audit of the inventory service and produce a findings re
 > 👤 **What to look for:** Bob spawns a background subagent. The main conversation continues
 > while the subagent works independently. You'll see two active workstreams in the UI.
 
-### Step 8 — Simultaneously: modernize InventoryItem and InventoryService
+### Step 10 — Simultaneously: modernize the service files
 
 In the **main conversation** (not the subagent), type:
 
@@ -178,14 +215,13 @@ Apply changes in parallel where files are independent.
 
 > 👤 **What to look for:**
 > - Bob edits multiple files in parallel — watch the tool calls fire simultaneously
-> - The **hook fires** when Bob tries to write `application.properties` (if it touches it during refactor)
 > - Java goes from 80-line POJO to a 3-line record — point this out explicitly
 
-> 🎤 **Presenter note:** *"Look at InventoryItem.java. It went from 96 lines of boilerplate to
-> 3 lines — a Java record. That's the same data, zero noise. Now imagine doing this across
-> 400 classes in an SAP extension. Bob can batch this."*
+> 🎤 **Presenter note:** *"Look at InventoryItem.java. It went from 96 lines of boilerplate
+> to 3 lines — a Java record. Same data, zero noise. Now imagine doing this across hundreds
+> of classes in a large legacy service. Bob can batch this."*
 
-### Step 9 — Spawn the Test Engineer subagent
+### Step 11 — Spawn the Test Engineer subagent
 
 ```
 Read lab5/.bob/personas/test-engineer.md and take on that role as a subagent.
@@ -196,20 +232,36 @@ for InventoryController. Place tests in lab5/service/src/test/java/com/example/i
 > 👤 **What to look for:** A second subagent spawns. Now you have: main agent (migration) +
 > Security Auditor + Test Engineer — three concurrent workstreams.
 
-> 🎤 **Presenter note:** *"This is how a real senior engineer works. They don't do one thing
-> at a time. Bob is now simultaneously finishing the migration, auditing for security, and
-> writing tests. Each subagent has a clear persona and scope."*
+> 🎤 **Presenter note:** *"Three engineers working simultaneously. The migration, the audit,
+> and the test suite — all in parallel. How long would this take your team to do sequentially?"*
+
+### Step 12 — Run the tests and verify
+
+Once the Test Engineer subagent has finished, type:
+
+```
+Run the tests that were just written. From lab5/service, run mvn test and report the results.
+```
+
+> 👤 **What to look for:**
+> - Bob runs `mvn test` in the terminal
+> - Tests pass (or Bob identifies and fixes any failures from the migration)
+> - The "did it actually work?" question is answered live
+
+> 🎤 **Presenter note:** *"This closes the loop. Bob didn't just migrate the code — we verified
+> it. The tests the subagent wrote are passing against the modernized implementation. That's
+> the full dev cycle: write, test, confirm."*
 
 ---
 
-## 🔒 Act 3 — Hooks + CI Pipeline [0:25 – 0:33]
+## 🔒 Act 3 — Hooks + CI Pipeline [0:28 – 0:37]
 
 > 🎤 **Presenter note:** *"Before we add CI, let me show you something. I've wired a custom
 > hook to Bob's tool calls. Every time Bob tries to write a pom.xml, the hook intercepts it,
 > validates the proposed content with Maven before anything hits disk, and blocks the write if
 > validation fails — sending the compiler error straight back to Bob so it can fix itself."*
 
-### Step 10 — Trigger the POM validation hook
+### Step 13 — Trigger the POM validation hook
 
 ```
 Bump the Spring Boot parent version to 3.2.0 and update the Java source/target to 17 in pom.xml.
@@ -227,11 +279,7 @@ Bump the Spring Boot parent version to 3.2.0 and update the Java source/target t
 > cannot get from prompt engineering alone. The hook is a shell script. It runs deterministically
 > inside the AI workflow every single time."*
 
-> 🎤 **Presenter note for SAP audience:** *"Imagine this on your BTP extension pipeline. Every
-> POM write validated before it reaches disk. Every bad dependency coordinate caught before the
-> build even starts. Bob writes the fix, the hook verifies it, the loop closes automatically."*
-
-### Step 11 — Verify the hook passed and the service still starts
+### Step 14 — Verify the service still starts
 
 ```
 Run mvn spring-boot:run from lab5/service and confirm the service starts cleanly on the updated POM.
@@ -240,7 +288,7 @@ Run mvn spring-boot:run from lab5/service and confirm the service starts cleanly
 > ✅ **You should see:** Maven resolves the Spring Boot 3.2.0 parent and the service starts.
 > The command log at `.bob/hooks/command-log.txt` shows the hook and command audit trail.
 
-### Step 12 — Bob generates the GitHub Actions CI pipeline
+### Step 15 — Bob generates the GitHub Actions CI pipeline
 
 ```
 Add a GitHub Actions CI pipeline for the inventory service.
@@ -260,7 +308,7 @@ Place the workflow at lab5/.github/workflows/ci.yml
 > Local guard catches it before commit. Pipeline guard catches it before merge.
 > Defence in depth — Bob built both layers."*
 
-### Step 13 — Verify the Dockerfile
+### Step 16 — Verify the Dockerfile
 
 ```
 Show me the Dockerfile for the inventory service and explain the multi-stage build.
@@ -271,13 +319,13 @@ Show me the Dockerfile for the inventory service and explain the multi-stage bui
 
 ---
 
-## 🌐 Act 4 — MCP + Ship [0:33 – 0:40]
+## 🌐 Act 4 — MCP + Ship [0:37 – 0:44]
 
-> 🎤 **Presenter note:** *"One more thing before we ship. I want to show you a general-purpose
-> MCP — the fetch server. This isn't GitHub-specific. It lets Bob reach out to any public URL.
-> Watch Bob pull the Spring Boot 3.x migration guide live and use it to give us advice."*
+> 🎤 **Presenter note:** *"One more thing before we ship. The fetch MCP lets Bob reach out to
+> any public URL. Watch it pull the official Spring Boot 3.x migration guide live and map the
+> breaking changes directly to our codebase."*
 
-### Step 14 — Use the fetch MCP to query live migration docs
+### Step 17 — Use the fetch MCP to query live migration docs
 
 ```
 Use the fetch tool to retrieve https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.0-Migration-Guide
@@ -290,11 +338,11 @@ Which changes should we address before upgrading from Spring Boot 2.7 to 3.x?
 > - Bob cites specific content from the page (javax→jakarta, Spring Security changes)
 > - Bob maps findings back to our specific codebase
 
-> 🎤 **Presenter note:** *"Bob just read a live web page and applied it to our code. No copy-paste,
-> no context switching. Any public documentation — Spring docs, RFC specs, your internal wiki if
-> it's public — Bob can pull and reason over it in real time."*
+> 🎤 **Presenter note:** *"Bob just read a live web page and applied it to our code. No
+> copy-paste, no context switching. Any public documentation — framework docs, RFC specs,
+> your team's internal wiki — Bob can pull and reason over it in real time."*
 
-### Step 15 — Generate the PR description
+### Step 18 — Generate the PR description
 
 ```
 Generate a pull request description for the modernization work we've done.
@@ -305,12 +353,12 @@ Format it as a GitHub PR body.
 > 👤 **What to look for:** Bob produces a structured PR description covering all changes.
 > If GitHub is configured, use the Create PR workflow. Otherwise, copy-paste the output.
 
-> 🎤 **Presenter note:** *"From legacy Java 8 service to modernized, containerized, tested,
-> and CI'd codebase — assessed, built, secured, and shipped in one Bob session."*
+> 🎤 **Presenter note:** *"From legacy Java 8 service to modernized, tested, containerized,
+> and CI'd codebase — assessed, built, verified, and shipped in one Bob session."*
 
 ---
 
-## 🎙️ Act 5 — Freestyle / Audience Q&A [0:40 – 0:45]
+## 🎙️ Act 5 — Freestyle / Audience Q&A [0:44 – 0:50]
 
 > 🎤 **Presenter note:** *"The floor is open. Here are three prompts I keep in my back pocket
 > for when the audience asks 'but can Bob do X?' — feel free to use these or take live questions."*
@@ -323,21 +371,21 @@ Review InventoryController.java as a senior Java engineer.
 What would you flag in a code review? Be specific and cite line numbers.
 ```
 
-**Prompt B — "Can Bob help with SAP-specific patterns?"**
-```
-This inventory service will be deployed as an SAP BTP extension.
-What additional considerations should we address for BTP deployment?
-Think about: multi-tenancy, service binding, logging, health endpoints.
-```
-
-**Prompt C — "Can Bob explain a complex migration risk?"**
+**Prompt B — "Can Bob explain a complex migration risk?"**
 ```
 Explain the risk of migrating from javax.validation to jakarta.validation
 in a Spring Boot 3.x upgrade. What could break at runtime, and how do we test for it?
 ```
 
-> 🎤 **Presenter note:** *"Notice Bob doesn't just answer the question — it reasons through the
-> risk, proposes a mitigation, and offers to implement it. That's what makes it a partner,
+**Prompt C — "Can Bob help plan a cloud deployment?"**
+```
+This inventory service needs to be deployed to a cloud platform.
+What additional considerations should we address?
+Think about: health endpoints, externalized configuration, logging standards, container sizing.
+```
+
+> 🎤 **Presenter note:** *"Notice Bob doesn't just answer the question — it reasons through
+> the risk, proposes a mitigation, and offers to implement it. That's what makes it a partner,
 > not just a search engine."*
 
 ---
@@ -348,9 +396,12 @@ By the end of the lab, the presenter should have demonstrated:
 
 - [ ] Java service running live at `http://localhost:8080/api/inventory`
 - [ ] Python dashboard showing live inventory data in the terminal
-- [ ] Bob operating in **☕ Java Architect** mode with `java-modernization` skill active
+- [ ] Plain Plan mode assessment completed (Step 6) — shows Bob's baseline
+- [ ] Bob switched to **☕ Java Architect** mode with `java-modernization` skill active
+- [ ] Before/after contrast between Plan mode and Java Architect mode outputs visible
 - [ ] `InventoryItem.java` modernized from 96-line POJO to a Java record
 - [ ] `InventoryService.java` refactored from for-loops to Stream API
+- [ ] Test suite written by subagent and verified passing with `mvn test`
 - [ ] POM validation hook **blocked** Bob from writing an invalid `pom.xml` and returned the Maven error to chat
 - [ ] Bob self-corrected after reading the hook's error output and retried successfully
 - [ ] GitHub Actions `ci.yml` generated with 3 jobs (build, scan, docker)
@@ -368,31 +419,33 @@ By the end of the lab, the presenter should have demonstrated:
 | Maven not found | `command not found: mvn` | Install Maven 3.9: `brew install maven` or download from maven.apache.org |
 | Port 8080 in use | `Web server failed to start. Port 8080 was already in use` | `lsof -i :8080` then `kill -9 <PID>`, or add `server.port=8081` temporarily |
 | Hook not firing | Bob writes `pom.xml` without triggering validation | Verify `chmod +x lab5/.bob/hooks/*.sh` and that Bob's workspace root is the repo root (not a subdirectory) |
-| MCP fetch error | Bob says "fetch tool not available" | Run `npx -y @modelcontextprotocol/server-fetch` once to install, then restart Bob |
+| MCP fetch error | Bob says "fetch tool not available" | Run `npx -y mcp-fetch-server --help` once to install, then restart Bob |
 | Dashboard connection error | `⚠ Cannot reach http://localhost:8080` | Java service isn't running — go to the service terminal and run `mvn spring-boot:run` |
+| Tests fail after migration | `mvn test` reports compilation errors | The record migration may have broken a constructor call — ask Bob to read the error and fix it |
 
 ---
 
 ## 💡 Tips for Presenters
 
-1. **Lead with the SAP angle early.** In your opening 60 seconds, say: *"How many of you have
-   a legacy Java 8 service somewhere in your SAP landscape that needs to move to BTP?"*
-   Every hand goes up. You've just made it personal.
+1. **Lead with the legacy problem.** In your opening 60 seconds, ask the audience: *"How many
+   of you have a Java 8 service somewhere that needs to move to 17?"* Make it personal before
+   the first prompt lands.
 
-2. **Run everything before the audience arrives.** Have both terminals open and running.
+2. **Don't skip Step 6.** The plain Plan mode assessment is the anchor for everything that follows.
+   If you jump straight to Java Architect mode, the audience has no baseline to compare against.
+
+3. **Run everything before the audience arrives.** Have both terminals open and running.
    Cold Maven downloads kill demo energy. Pre-warm: `cd lab5/service && mvn dependency:resolve`.
 
-3. **Let the hook moment breathe.** When the secret-scanning hook blocks Bob, pause.
-   Let the audience read the error. Then say: *"Bob didn't just warn — it was stopped.
-   That's deterministic code enforcing a policy inside an AI session."*
+4. **Let the hook moment breathe.** When the hook fires, pause. Let the audience read the error.
+   Then say: *"Bob didn't just get blocked — it got the compiler error back. Watch it fix itself."*
 
-4. **The parallel subagent moment is your headline.** When Security Auditor + Test Engineer
+5. **The parallel subagent moment is your headline.** When Security Auditor + Test Engineer
    are both running while the main migration continues, say: *"Three engineers working
    simultaneously. How long would this take your team to do sequentially?"*
 
-5. **Use the freestyle act for the skeptic in the room.** There's always someone who asks
-   "yeah but what about X?" The pre-scripted prompts are your safety net. The BTP extension
-   prompt (Prompt B) almost always gets a strong reaction from SAP audiences.
+6. **Use the freestyle act for the skeptic in the room.** There's always someone who asks
+   "yeah but what about X?" The pre-scripted prompts are your safety net.
 
 ---
 
