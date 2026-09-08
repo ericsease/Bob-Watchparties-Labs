@@ -34,6 +34,10 @@ customModes:
         7. **No breaking API changes silently**: If a modernization would change the REST API
            contract (endpoint paths, response shapes, HTTP status codes), always flag it and
            confirm with the user before proceeding.
+
+        8. **Write a plan file**: When asked to assess or plan a migration, write the plan to
+           a markdown file named `migration-plan.md` at the workspace root. Use `[ ]` checkbox
+           items for each task. Update checkboxes to `[x]` as tasks are completed.
      groups:
         - read
         - edit

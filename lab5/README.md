@@ -87,13 +87,26 @@ chmod +x lab5/.bob/hooks/*.sh
 
 ### Step 4 — Open Bob in Plan mode *(do NOT switch to Java Architect yet)*
 
-1. Open the `lab5/` directory (or repo root) in Bob
+1. Open the `lab5/` directory (or **repo root**) in Bob
 2. Make sure you are in **Plan** mode — the contrast with Java Architect mode in Act 1 is the point
 3. Confirm the mode badge shows Plan
+
+> ⚠️ **Workspace root matters:** Bob resolves `.bob/` relative to the workspace root.
+> Open `lab5/` or the repo root — **not** a subdirectory like `lab5/service/`.
+> If the **☕ Java Architect** mode doesn't appear in the mode selector, this is the reason.
 
 > 🎤 **Presenter note:** *"We're starting in plain Plan mode — no custom persona, no specialist
 > skill loaded. I want to show you what Bob gives you out of the box, and then what changes
 > when we give it the right context."*
+
+> 🎤 **Presenter note — show the Settings UI:** Open **Settings → Modes** to show the Java
+> Architect entry to the audience. Then open **Settings → Extensions** (or MCP panel) to show
+> the fetch server registered. This is a good 30-second orientation before the first prompt.
+
+> ⚠️ **Auto-approve required for subagents:** The subagent steps (Steps 9 and 11) require
+> auto-approval to run without interruption. Enable it now in **Settings → Auto-approve** before
+> the demo starts. Without it, Bob will pause and ask permission at each subagent spawn —
+> which breaks the "three workstreams in parallel" moment.
 
 ### Step 5 — Install and enable the fetch MCP
 
@@ -104,9 +117,10 @@ In Bob's MCP settings, add the fetch server from `lab5/.bob/mcp.json`:
 npx -y mcp-fetch-server --help
 ```
 
-> 🎤 **Presenter note:** *"We've added a general-purpose MCP — not tied to any specific platform.
-> It lets Bob fetch any public URL. In Act 4, we'll use it to pull the live Spring Boot
-> migration guide and apply it directly to our codebase."*
+> 🎤 **Presenter note — show the MCP panel:** *"Before I type anything, let me show you what's
+> configured. Open Settings → MCP — you'll see a 'fetch' server registered. This is a
+> general-purpose tool, not tied to any specific platform. It lets Bob fetch any public URL.
+> In Act 4, we'll use it to pull the live Spring Boot migration guide directly into context."*
 
 ---
 
@@ -251,6 +265,26 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 > 🎤 **Presenter note:** *"This closes the loop. Bob didn't just migrate the code — we verified
 > it. The tests the subagent wrote are passing against the modernized implementation. That's
 > the full dev cycle: write, test, confirm."*
+
+### Step 12b — Bob Findings scan *(optional, ~2 min)*
+
+> 🎤 **Presenter note:** *"One more thing before we move to CI. Bob has a built-in Findings
+> feature — a static analysis pass that flags security issues, quality problems, and style
+> violations. Let me trigger it on the modernized code."*
+
+Click the **Findings** icon in Bob's sidebar (the shield/magnifying glass icon), or type:
+
+```
+Run Bob Findings on the modernized inventory service source files in
+lab5/service/src/main/java/com/example/inventory/.
+Summarise any security, quality, or style findings.
+```
+
+> 👤 **What to look for:**
+> - Bob surfaces any remaining issues the subagent audit may have missed
+> - Shows that automated quality gates exist alongside the manual audit
+> - A good talking point: *"The Security Auditor subagent and Bob Findings are complementary —
+>   one reasons about the code, the other applies deterministic rules."*
 
 ---
 
@@ -456,6 +490,9 @@ By the end of the lab, the presenter should have demonstrated:
 - Read the hooks documentation: [`Hooks.md`](../Hooks.md)
 - Explore the `java-modernization` skill: [`lab5/.bob/skills/java-modernization/SKILL.md`](.bob/skills/java-modernization/SKILL.md)
 - Understand the subagent personas: [`lab5/.bob/personas/`](.bob/personas/)
+- **Future extension:** Add a **Secure Coder** custom mode persona that enforces OWASP patterns,
+  flags injection risks, and gates any write that introduces a new HTTP endpoint without input
+  validation. Could replace or complement the Security Auditor subagent as a resident mode.
 
 ---
 
