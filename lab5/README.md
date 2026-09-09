@@ -309,25 +309,45 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 > 🎤 **Presenter note:** *"Before we add CI, let me show you something. I've wired a custom
 > hook to Bob's tool calls. Every time Bob tries to write a pom.xml, the hook intercepts it,
 > validates the proposed content with Maven before anything hits disk, and blocks the write if
-> validation fails — sending the compiler error straight back to Bob so it can fix itself."*
+> validation fails — sending the compiler error straight back to Bob so it can fix itself.*
+>
+> *The security audit in Act 2 flagged a missing authentication layer. I'm going to ask Bob
+> to add Spring Security to the POM — and I'm going to word the prompt in a way that makes
+> Bob write an incomplete dependency block, which is a completely realistic typo.
+> Watch what happens."*
 
 ### Step 13 — Trigger the POM validation hook
 
 ```
-Bump the Spring Boot parent version to 3.2.0 and update the Java source/target to 17 in pom.xml.
+The security audit identified a missing authentication layer.
+Add the spring-boot-starter-security dependency to pom.xml to address finding AUTH-001.
 ```
+
+> ⚠️ **Why this triggers the hook:** Bob will add a `<dependency>` block for Spring Security.
+> The prompt deliberately omits the `<groupId>` — which Bob may also omit when it infers the
+> dependency from the Spring Boot parent. `mvn validate` catches a missing `<groupId>` as an
+> invalid POM immediately.
+>
+> If Bob writes a complete, valid dependency block on the first try, the hook passes and you
+> can say: *"The hook validated it — clean write. Let me show you what a block looks like:"*
+> then manually follow up with:
+> ```
+> Actually, add it without the groupId element — just artifactId and version — so I can
+> show the audience what the hook catches.
+> ```
 
 > 👤 **What to look for:**
 > - Bob attempts `write_file` on `pom.xml`
 > - The `validate-pom.sh` hook fires **before** the write completes
 > - Hook runs `mvn validate` against the proposed content in a temp directory — the real file is never touched
-> - Valid POM → `✅ pom.xml validated successfully.` — write goes through cleanly
-> - If Bob produces an invalid POM → `🔒 HOOK BLOCKED` with the Maven error in chat — Bob reads the error and self-corrects
+> - `🔒 HOOK BLOCKED: pom.xml failed Maven validation.` appears in chat with the Maven error
+> - Bob reads the error, identifies the missing `<groupId>`, adds it, and retries — **this is the self-correction loop**
+> - Second attempt passes: `✅ pom.xml validated successfully.`
 
-> 🎤 **Presenter note:** *"This is the self-correction loop. Bob didn't just get blocked — it
-> got the compiler error back. It can read that output and fix itself. That's behaviour you
-> cannot get from prompt engineering alone. The hook is a shell script. It runs deterministically
-> inside the AI workflow every single time."*
+> 🎤 **Presenter note:** *"Bob didn't just get blocked — it got the compiler error back and
+> fixed itself. That's the self-correction loop. The hook is a shell script, running
+> deterministically inside an AI workflow. Every pom.xml write, every time,
+> no prompt engineering required."*
 
 ### Step 14 — Verify the service still starts
 
