@@ -45,3 +45,4 @@ customModes:
         - skill
         - subagent
         - subtask
+        - todo
