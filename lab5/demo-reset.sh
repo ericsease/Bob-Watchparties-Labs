@@ -52,6 +52,7 @@ git checkout -- lab5/service/src/ lab5/service/pom.xml \
                 lab5/service/src/main/resources/application.properties 2>/dev/null || true
 
 # Remove any generated artefacts from the previous session
+# NOTE: lab5/demo-issues.md is intentionally NOT removed — it persists across runs
 rm -f migration-plan.md session-summary.md
 rm -f lab5/.github/workflows/ci.yml 2>/dev/null || true
 rm -rf lab5/service/src/test/ 2>/dev/null || true
