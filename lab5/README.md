@@ -307,54 +307,44 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 ## 🔒 Act 3 — Hooks + CI Pipeline [0:28 – 0:37]
 
 > 🎤 **Presenter note:** *"Before we add CI, let me show you something. I've wired a custom
-> hook to Bob's tool calls. Every time Bob tries to write a pom.xml, the hook intercepts it,
-> validates the proposed content with Maven before anything hits disk, and blocks the write if
-> validation fails — sending the compiler error straight back to Bob so it can fix itself.*
+> hook to Bob's tool calls. Every time Bob tries to write any file, the hook intercepts it,
+> scans the proposed content for hardcoded secrets, and blocks the write if it finds one —
+> sending the error straight back to Bob so it can fix itself.*
 >
-> *The security audit in Act 2 flagged a missing authentication layer. I'm going to ask Bob
-> to upgrade Spring Boot and add Spring Security — but I'm going to give it a deliberately
-> bad version number to guarantee the hook fires. Watch what happens."*
+> *Open `application.properties`. You'll see a hardcoded password sitting right there —
+> `admin123`. I'm going to ask Bob to make a routine config change to that file.
+> Watch what happens the moment Bob tries to write it."*
 
-### Step 13 — Trigger the POM validation hook
+### Step 13 — Trigger the secrets hook
 
 ```
-The security audit identified a missing authentication layer. As part of the
-Spring Boot 3 upgrade, update pom.xml to:
-- Change the spring-boot-starter-parent version to 3.2.RELEASE
-- Add spring-boot-starter-security as a dependency
-- Update java.version to 17
+Add H2 console configuration to application.properties so we can inspect
+the in-memory database during development:
+- Enable the H2 console at /h2-console
+- Set the datasource username to dev-user
 ```
 
-> ⚠️ **Why this reliably triggers the hook:** `3.2.RELEASE` is not a valid Maven version
-> for Spring Boot (the correct form is `3.2.0`). Bob will write it as instructed.
-> `mvn validate` immediately rejects it with:
-> `[ERROR] Non-parseable POM … Unknown artifact version '3.2.RELEASE'`
-> — the hook blocks the write, returns the error to Bob, and Bob self-corrects to `3.2.0`.
+> ⚠️ **Why this reliably triggers the hook:** `application.properties` already contains
+> `spring.datasource.password=admin123`. The hook scans both the proposed content *and* the
+> existing file on disk for secret patterns (`password=`, `secret=`, `token=`, etc.).
+> The moment Bob touches that file — regardless of which write tool it uses — the hook finds
+> the existing `password=` line and blocks the write immediately.
 >
-> This is **guaranteed** to fire regardless of which write tool Bob uses (`write_file`,
-> `apply_diff`, `search_and_replace`) because the hook intercepts all of them.
->
-> **Fallback if Bob auto-corrects the version before writing:**
-> Bob occasionally notices `RELEASE` is wrong and substitutes `3.2.0` before the hook runs.
-> If that happens, the hook passes (correct!) — say *"The hook validated it clean."* then show
-> the block scenario manually:
-> ```
-> Update pom.xml again — change the spring-boot-starter-security entry to omit
-> the groupId element entirely, so I can show the audience what the hook catches.
-> ```
+> No fragile prompt engineering needed. The file already has the secret; any edit triggers it.
 
 > 👤 **What to look for:**
-> - Bob attempts a write tool on `pom.xml`
-> - The `validate-pom.sh` hook fires **before** the write completes
-> - Hook runs `mvn validate` against the proposed content in a temp directory — the real file is never touched
-> - `🔒 HOOK BLOCKED: pom.xml failed Maven validation.` appears in chat with the Maven error
-> - Bob reads the error, self-corrects the version to `3.2.0`, and retries — **this is the self-correction loop**
-> - Second attempt passes: `✅ pom.xml validated successfully.`
+> - Bob attempts a write tool on `application.properties`
+> - The `check-secrets.sh` hook fires **before** the write completes
+> - `🔒 HOOK BLOCKED: Existing secrets found in application.properties` appears in chat
+> - Bob reads the error, externalizes the password to an environment variable, and retries
+> — **this is the self-correction loop**
+> - Second attempt passes and the H2 config is written cleanly
 
-> 🎤 **Presenter note:** *"Bob didn't just get blocked — it got the Maven error back and
-> fixed itself. That's the self-correction loop. The hook is a shell script, running
-> deterministically inside an AI workflow. Every pom.xml write, every time,
-> no prompt engineering required."*
+> 🎤 **Presenter note:** *"Bob didn't just get blocked — it read the error message and
+> fixed the root cause: the hardcoded password got moved to an environment variable reference.
+> That's the self-correction loop. The hook is a 60-line shell script, running
+> deterministically before every single file write — no prompt engineering required,
+> no Maven, no build toolchain. Just grep."*
 
 ### Step 14 — Configure Spring Security and restore the dashboard
 
@@ -405,9 +395,10 @@ Place the workflow at lab5/.github/workflows/ci.yml
 > Point out the three jobs — build, scan, docker — and note that the secret scan in CI
 > *echoes* the Bob hook: two layers of protection.
 
-> 🎤 **Presenter note:** *"The CI pipeline has the same secret scan as the Bob hook.
-> Local guard catches it before commit. Pipeline guard catches it before merge.
-> Defence in depth — Bob built both layers."*
+> 🎤 **Presenter note:** *"Notice Job 2 — the secret scan. It's doing exactly what
+> `check-secrets.sh` does locally: grep for `password=`, `token=`, `secret=` in config files.
+> The hook catches it before the write. The pipeline catches it before the merge.
+> Bob just built both layers of that defence in one session."*
 
 ### Step 16 — Verify the Dockerfile
 

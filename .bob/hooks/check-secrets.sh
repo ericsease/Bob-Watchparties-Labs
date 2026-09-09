@@ -19,14 +19,14 @@ PAYLOAD=$(cat)
 FILE_PATH=$(echo "$PAYLOAD" | python3 -c "
 import sys, json
 data = json.load(sys.stdin)
-print(data.get('input', {}).get('path', ''))
+print(data.get('tool_input', {}).get('path', ''))
 " 2>/dev/null || echo "")
 
 # Extract proposed content (write_file) or fall back to reading the current file
 CONTENT=$(echo "$PAYLOAD" | python3 -c "
 import sys, json
 data = json.load(sys.stdin)
-inp = data.get('input', {})
+inp = data.get('tool_input', {})
 # write_file sends 'content'; diff tools send the patch
 print(inp.get('content', inp.get('diff', '')))
 " 2>/dev/null || echo "")

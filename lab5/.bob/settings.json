@@ -6,8 +6,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "sh .bob/hooks/validate-pom.sh",
-            "timeout": 30
+            "command": "sh .bob/hooks/check-secrets.sh",
+            "timeout": 10
           }
         ]
       }
