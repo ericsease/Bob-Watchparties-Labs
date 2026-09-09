@@ -312,39 +312,46 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 > validation fails — sending the compiler error straight back to Bob so it can fix itself.*
 >
 > *The security audit in Act 2 flagged a missing authentication layer. I'm going to ask Bob
-> to add Spring Security to the POM — and I'm going to word the prompt in a way that makes
-> Bob write an incomplete dependency block, which is a completely realistic typo.
-> Watch what happens."*
+> to upgrade Spring Boot and add Spring Security — but I'm going to give it a deliberately
+> bad version number to guarantee the hook fires. Watch what happens."*
 
 ### Step 13 — Trigger the POM validation hook
 
 ```
-The security audit identified a missing authentication layer.
-Add the spring-boot-starter-security dependency to pom.xml to address finding AUTH-001.
+The security audit identified a missing authentication layer. As part of the
+Spring Boot 3 upgrade, update pom.xml to:
+- Change the spring-boot-starter-parent version to 3.2.RELEASE
+- Add spring-boot-starter-security as a dependency
+- Update java.version to 17
 ```
 
-> ⚠️ **Why this triggers the hook:** Bob will add a `<dependency>` block for Spring Security.
-> The prompt deliberately omits the `<groupId>` — which Bob may also omit when it infers the
-> dependency from the Spring Boot parent. `mvn validate` catches a missing `<groupId>` as an
-> invalid POM immediately.
+> ⚠️ **Why this reliably triggers the hook:** `3.2.RELEASE` is not a valid Maven version
+> for Spring Boot (the correct form is `3.2.0`). Bob will write it as instructed.
+> `mvn validate` immediately rejects it with:
+> `[ERROR] Non-parseable POM … Unknown artifact version '3.2.RELEASE'`
+> — the hook blocks the write, returns the error to Bob, and Bob self-corrects to `3.2.0`.
 >
-> If Bob writes a complete, valid dependency block on the first try, the hook passes and you
-> can say: *"The hook validated it — clean write. Let me show you what a block looks like:"*
-> then manually follow up with:
+> This is **guaranteed** to fire regardless of which write tool Bob uses (`write_file`,
+> `apply_diff`, `search_and_replace`) because the hook intercepts all of them.
+>
+> **Fallback if Bob auto-corrects the version before writing:**
+> Bob occasionally notices `RELEASE` is wrong and substitutes `3.2.0` before the hook runs.
+> If that happens, the hook passes (correct!) — say *"The hook validated it clean."* then show
+> the block scenario manually:
 > ```
-> Actually, add it without the groupId element — just artifactId and version — so I can
-> show the audience what the hook catches.
+> Update pom.xml again — change the spring-boot-starter-security entry to omit
+> the groupId element entirely, so I can show the audience what the hook catches.
 > ```
 
 > 👤 **What to look for:**
-> - Bob attempts `write_file` on `pom.xml`
+> - Bob attempts a write tool on `pom.xml`
 > - The `validate-pom.sh` hook fires **before** the write completes
 > - Hook runs `mvn validate` against the proposed content in a temp directory — the real file is never touched
 > - `🔒 HOOK BLOCKED: pom.xml failed Maven validation.` appears in chat with the Maven error
-> - Bob reads the error, identifies the missing `<groupId>`, adds it, and retries — **this is the self-correction loop**
+> - Bob reads the error, self-corrects the version to `3.2.0`, and retries — **this is the self-correction loop**
 > - Second attempt passes: `✅ pom.xml validated successfully.`
 
-> 🎤 **Presenter note:** *"Bob didn't just get blocked — it got the compiler error back and
+> 🎤 **Presenter note:** *"Bob didn't just get blocked — it got the Maven error back and
 > fixed itself. That's the self-correction loop. The hook is a shell script, running
 > deterministically inside an AI workflow. Every pom.xml write, every time,
 > no prompt engineering required."*
