@@ -48,8 +48,12 @@ ok "Working tree clean"
 
 # ── 3. Restore legacy source files to pristine state ─────────────────────────
 # (resets any changes from a previous demo run)
-git checkout -- lab5/service/src/ lab5/service/pom.xml \
+git checkout -- lab5/service/src/ \
                 lab5/service/src/main/resources/application.properties 2>/dev/null || true
+
+# Restore the POM from the saved legacy reference (NOT from git — main carries
+# the modernized POM, so git checkout would restore the wrong state)
+cp lab5/.demo-reference/pom.xml.legacy lab5/service/pom.xml
 
 # Remove any generated artefacts from the previous session
 # NOTE: lab5/demo-issues.md is intentionally NOT removed — it persists across runs
