@@ -459,6 +459,42 @@ By the end of the lab, the presenter should have demonstrated:
 
 ---
 
+## 🎬 Before Every Demo Session
+
+Run this once from the repo root before the audience arrives:
+
+```bash
+sh lab5/demo-reset.sh
+```
+
+The script will:
+1. Verify you are on `main` with a clean working tree
+2. Restore all `lab5/service/` source files to their pristine legacy state (removes any artefacts from a previous run)
+3. Cut a fresh dated branch — `demo/lab5-YYYYMMDD` — so the PR workflow has a real diff to show
+4. Pre-warm the Maven dependency cache (avoids cold downloads during the demo)
+5. Verify Java, Maven, Node, and Python are available
+6. Print a final manual checklist
+
+**After the script completes, finish the checklist it prints:**
+- Open Bob with the repo root (or `lab5/`) as workspace
+- Confirm **☕ Java Architect** appears in the mode selector
+- Enable auto-approve in Bob Settings
+- Open Settings → MCP and confirm the `fetch` server is registered
+- Start the Java service: `cd lab5/service && mvn spring-boot:run`
+- Start the dashboard: `cd lab5/dashboard && python3 watch.py`
+- Verify the dashboard shows 5 items at `http://localhost:8080/api/inventory`
+
+**After the demo:**
+```bash
+git checkout main
+```
+The demo branch (`demo/lab5-YYYYMMDD`) can be left for reference or deleted:
+```bash
+git branch -D demo/lab5-YYYYMMDD
+```
+
+---
+
 ## 💡 Tips for Presenters
 
 1. **Lead with the legacy problem.** In your opening 60 seconds, ask the audience: *"How many
