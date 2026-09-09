@@ -56,6 +56,9 @@ git checkout -- lab5/service/src/ lab5/service/pom.xml \
 rm -f migration-plan.md session-summary.md
 rm -f lab5/.github/workflows/ci.yml 2>/dev/null || true
 rm -rf lab5/service/src/test/ 2>/dev/null || true
+# SecurityConfig.java is committed to main (for reference) but must not exist at demo
+# start — Bob adds it in Step 14 as part of the Spring Security configuration demo
+rm -f lab5/service/src/main/java/com/example/inventory/SecurityConfig.java
 
 ok "Lab5 source files restored to legacy state"
 
