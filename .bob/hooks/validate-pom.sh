@@ -9,10 +9,13 @@
 #   2. mvn validate    — catches valid XML that's an invalid POM
 #                        (missing groupId, bad coordinates, unknown packaging, etc.)
 #
-# Non-pom writes exit 0 immediately — zero overhead on other files.
-# Proposed content is written to a temp dir so the real file is never touched
-# if validation fails.
+# Tool-specific content extraction:
+#   write_file         → use 'content' field directly (full file)
+#   apply_diff         → apply SEARCH/REPLACE blocks to current file in a temp copy
+#   search_and_replace → apply 'search'→'replace' substitution to current file
+#   insert_content     → insert 'content' at 'line' in current file
 #
+# Non-pom writes exit 0 immediately — zero overhead on other files.
 # Exit 2 to block Bob; exit 0 to allow.
 #
 # Stdin shape (PreToolUse):
@@ -21,7 +24,13 @@
 # Do NOT use set -e — grep/mvn return non-zero on expected failures
 PAYLOAD=$(cat)
 
-# ── Extract file path ────────────────────────────────────────────────────────
+# ── Extract tool name and file path ──────────────────────────────────────────
+TOOL_NAME=$(echo "$PAYLOAD" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+print(data.get('tool_name', ''))
+" 2>/dev/null || echo "")
+
 FILE_PATH=$(echo "$PAYLOAD" | python3 -c "
 import sys, json
 data = json.load(sys.stdin)
@@ -34,21 +43,79 @@ case "$FILE_PATH" in
   *) exit 0 ;;
 esac
 
-# ── Extract proposed content ─────────────────────────────────────────────────
+# ── Build the post-edit content based on tool type ───────────────────────────
 CONTENT=$(echo "$PAYLOAD" | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-inp = data.get('tool_input', {})
-# write_file sends 'content'; patch tools send 'diff'
-val = inp.get('content') or inp.get('diff') or ''
-print(val)
-" 2>/dev/null || echo "")
+import sys, json, re
 
-# If we couldn't extract content (e.g. apply_diff payload), fall back to the
-# file on disk — validates the post-patch state one step behind, but still useful
-if [ -z "$CONTENT" ] && [ -f "$FILE_PATH" ]; then
-  CONTENT=$(cat "$FILE_PATH")
-fi
+data = json.load(sys.stdin)
+inp  = data.get('tool_input', {})
+tool = data.get('tool_name', '')
+path = inp.get('path', '')
+
+# ── write_file: full replacement content ────────────────────────────────────
+if tool == 'write_file':
+    print(inp.get('content', ''))
+    sys.exit(0)
+
+# ── Read the current file from disk (needed for patch tools) ─────────────────
+try:
+    with open(path, 'r') as f:
+        current = f.read()
+except Exception:
+    sys.exit(0)   # file doesn't exist yet — nothing to patch against
+
+# ── apply_diff: parse SEARCH/REPLACE blocks and apply them ───────────────────
+if tool == 'apply_diff':
+    diff = inp.get('diff', '')
+    # Split on block boundaries; each block has SEARCH ... ======= ... REPLACE
+    blocks = re.split(r'<<<<<<< SEARCH\n', diff)
+    result = current
+    for block in blocks[1:]:   # skip preamble before first block
+        parts = block.split('\n=======\n', 1)
+        if len(parts) != 2:
+            continue
+        search_part = parts[0]
+        replace_part = parts[1].split('\n>>>>>>> REPLACE', 1)[0]
+        # Strip the optional :start_line: header from the search block
+        search_clean = re.sub(r'^:start_line:\d+\n-+\n', '', search_part, flags=re.MULTILINE)
+        result = result.replace(search_clean, replace_part, 1)
+    print(result)
+    sys.exit(0)
+
+# ── search_and_replace: apply regex or literal substitution ──────────────────
+if tool == 'search_and_replace':
+    search  = inp.get('search', '')
+    replace = inp.get('replace', '')
+    use_re  = str(inp.get('use_regex', 'false')).lower() == 'true'
+    ignore  = str(inp.get('ignore_case', 'false')).lower() == 'true'
+    flags   = re.IGNORECASE if ignore else 0
+    if use_re:
+        result = re.sub(search, replace, current, flags=flags)
+    else:
+        if ignore:
+            result = re.sub(re.escape(search), replace, current, flags=flags)
+        else:
+            result = current.replace(search, replace)
+    print(result)
+    sys.exit(0)
+
+# ── insert_content: insert lines at the given line number ────────────────────
+if tool == 'insert_content':
+    content_to_insert = inp.get('content', '')
+    line_num = int(inp.get('line', 0))
+    lines = current.splitlines(keepends=True)
+    if line_num == 0:
+        result = current + content_to_insert
+    else:
+        insert_at = max(0, line_num - 1)
+        lines.insert(insert_at, content_to_insert if content_to_insert.endswith('\n') else content_to_insert + '\n')
+        result = ''.join(lines)
+    print(result)
+    sys.exit(0)
+
+# Fallback — pass through current file
+print(current)
+" 2>/dev/null || echo "")
 
 if [ -z "$CONTENT" ]; then
   exit 0
