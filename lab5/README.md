@@ -15,7 +15,7 @@
 2. **Custom modes** — switch Bob's persona to a "Java Architect" who enforces Java 17+ best practices and see the difference it makes
 3. **Skills** — walk through a `java-modernization` playbook and watch Bob apply its rules automatically
 4. **Parallel subagents** — spawn a Security Auditor and a Test Engineer running simultaneously
-5. **Lifecycle hooks** — deterministic guards that validate POM changes before they hit disk, with a self-correction loop
+5. **Security hardening** — Bob reads the audit findings and remediates a hardcoded credential + adds Spring Security in one pass
 6. **GitHub Actions CI** — Bob generates a complete pipeline from a single prompt
 7. **General-purpose MCP** — Bob fetches live Spring Boot migration docs from the web
 8. **Full SDLC** — assessment → migration → verify → CI/CD → containerization → PR in one session
@@ -29,7 +29,7 @@
 | Setup | 0:00 – 0:07 | Start services, configure Bob | Mode switching, skill setup |
 | Act 1 | 0:07 – 0:17 | Plan mode orient → expert mode assess | Before/after custom mode contrast |
 | Act 2 | 0:17 – 0:28 | Modernize Java 8 → 17 + verify | Parallel subagents, test loop |
-| Act 3 | 0:28 – 0:37 | Hooks + CI pipeline | POM hook, GitHub Actions generation |
+| Act 3 | 0:28 – 0:37 | Security hardening + CI pipeline | Credential remediation, GitHub Actions generation |
 | Act 4 | 0:37 – 0:44 | MCP + ship via PR | Fetch MCP, PR workflow |
 | Act 5 | 0:44 – 0:50 | Freestyle / audience Q&A | Open demo |
 
@@ -304,47 +304,33 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 
 ---
 
-## 🔒 Act 3 — Hooks + CI Pipeline [0:28 – 0:37]
+## 🔒 Act 3 — Security Hardening + CI Pipeline [0:28 – 0:37]
 
-> 🎤 **Presenter note:** *"Before we add CI, let me show you something. I've wired a custom
-> hook to Bob's tool calls. Every time Bob tries to write any file, the hook intercepts it,
-> scans the proposed content for hardcoded secrets, and blocks the write if it finds one —
-> sending the error straight back to Bob so it can fix itself.*
->
-> *Open `application.properties`. You'll see a hardcoded password sitting right there —
-> `admin123`. I'm going to ask Bob to make a routine config change to that file.
-> Watch what happens the moment Bob tries to write it."*
+> 🎤 **Presenter note:** *"The security audit flagged two things: a missing authentication
+> layer and a hardcoded credential. Let's fix both, then build a CI pipeline that enforces
+> the same checks on every future commit."*
 
-### Step 13 — Trigger the secrets hook
+### Step 13 — Fix the hardcoded credential and add Spring Security
 
 ```
-Add H2 console configuration to application.properties so we can inspect
-the in-memory database during development:
-- Enable the H2 console at /h2-console
-- Set the datasource username to dev-user
+The security audit flagged two issues in application.properties and the POM:
+
+1. application.properties has a hardcoded password (spring.datasource.password=admin123).
+   Externalize it to an environment variable reference: ${DB_PASSWORD:changeme}
+
+2. The POM is missing Spring Security. Add spring-boot-starter-security and
+   update the parent version to 3.2.0 and java.version to 17.
 ```
 
-> ⚠️ **Why this reliably triggers the hook:** `application.properties` already contains
-> `spring.datasource.password=admin123`. The hook scans both the proposed content *and* the
-> existing file on disk for secret patterns (`password=`, `secret=`, `token=`, etc.).
-> The moment Bob touches that file — regardless of which write tool it uses — the hook finds
-> the existing `password=` line and blocks the write immediately.
->
-> No fragile prompt engineering needed. The file already has the secret; any edit triggers it.
+> 🎤 **Presenter note:** *"Bob is going to fix the credential leak and upgrade Spring Boot
+> in one pass. Watch the tool calls — it reads both files, plans the changes, then writes them.
+> This is the same pattern as Act 2 but now it's security-driven remediation."*
 
 > 👤 **What to look for:**
-> - Bob attempts a write tool on `application.properties`
-> - The `check-secrets.sh` hook fires **before** the write completes
-> - `🔒 HOOK BLOCKED: Existing secrets found in application.properties` appears in chat
-> - Bob reads the error, externalizes the password to an environment variable, and retries
-> — **this is the self-correction loop**
-> - Second attempt passes and the H2 config is written cleanly
-
-> 🎤 **Presenter note:** *"Bob didn't just get blocked — it read the error message and
-> fixed the root cause: the hardcoded password got moved to an environment variable reference.
-> That's the self-correction loop. The hook is a 60-line shell script, running
-> deterministically before every single file write — no prompt engineering required,
-> no Maven, no build toolchain. Just grep."*
+> - Bob reads `application.properties` and `pom.xml` in parallel
+> - Replaces the hardcoded `admin123` with `${DB_PASSWORD:changeme}` — externalised, safe to commit
+> - Updates `pom.xml` with Spring Boot 3.2.0, Java 17, and `spring-boot-starter-security`
+> - Uses its todo list to track both changes without losing either one
 
 ### Step 14 — Configure Spring Security and restore the dashboard
 
@@ -377,7 +363,6 @@ Check that curl http://localhost:8080/api/inventory returns data without credent
 ```
 
 > ✅ **You should see:** Service starts, dashboard recovers and shows live inventory data again.
-> The command log at `.bob/hooks/command-log.txt` shows the audit trail.
 
 ### Step 15 — Bob generates the GitHub Actions CI pipeline
 
@@ -392,13 +377,13 @@ Place the workflow at lab5/.github/workflows/ci.yml
 ```
 
 > 👤 **What to look for:** Bob generates a complete, well-structured YAML workflow.
-> Point out the three jobs — build, scan, docker — and note that the secret scan in CI
-> *echoes* the Bob hook: two layers of protection.
+> Point out the three jobs — build, scan, docker — and note that Job 2 enforces the same
+> credential check we just fixed manually: now it's automatic on every PR.
 
-> 🎤 **Presenter note:** *"Notice Job 2 — the secret scan. It's doing exactly what
-> `check-secrets.sh` does locally: grep for `password=`, `token=`, `secret=` in config files.
-> The hook catches it before the write. The pipeline catches it before the merge.
-> Bob just built both layers of that defence in one session."*
+> 🎤 **Presenter note:** *"Notice Job 2 — the secret scan in CI. It catches the same pattern
+> we just fixed: hardcoded `password=` in config files. We fixed it manually this session;
+> the pipeline ensures no future commit sneaks one back in. Two layers — developer remediation
+> now, automated gate forever."*
 
 ### Step 16 — Verify the Dockerfile
 
@@ -494,8 +479,8 @@ By the end of the lab, the presenter should have demonstrated:
 - [ ] `InventoryItem.java` modernized from 96-line POJO to a Java record
 - [ ] `InventoryService.java` refactored from for-loops to Stream API
 - [ ] Test suite written by subagent and verified passing with `mvn test`
-- [ ] POM validation hook **blocked** Bob from writing an invalid `pom.xml` and returned the Maven error to chat
-- [ ] Bob self-corrected after reading the hook's error output and retried successfully
+- [ ] Hardcoded `admin123` credential externalized to `${DB_PASSWORD:changeme}` in `application.properties`
+- [ ] Spring Boot upgraded to 3.2.0, Java 17, `spring-boot-starter-security` added to POM
 - [ ] GitHub Actions `ci.yml` generated with 3 jobs (build, scan, docker)
 - [ ] Fetch MCP used to retrieve live Spring Boot migration docs
 - [ ] PR description generated covering all changes
@@ -510,7 +495,6 @@ By the end of the lab, the presenter should have demonstrated:
 | Java version mismatch | `mvn spring-boot:run` fails with `source 8 not supported` | Run with `JAVA_HOME` pointing to a JDK that supports `--release 8` (JDK 17 is fine — it supports source 8) |
 | Maven not found | `command not found: mvn` | Install Maven 3.9: `brew install maven` or download from maven.apache.org |
 | Port 8080 in use | `Web server failed to start. Port 8080 was already in use` | `lsof -i :8080` then `kill -9 <PID>`, or add `server.port=8081` temporarily |
-| Hook not firing | Bob writes `pom.xml` without triggering validation | Verify `chmod +x lab5/.bob/hooks/*.sh` and that Bob's workspace root is the repo root (not a subdirectory) |
 | MCP fetch error | Bob says "fetch tool not available" | Run `npx -y mcp-fetch-server --help` once to install, then restart Bob |
 | Dashboard connection error | `⚠ Cannot reach http://localhost:8080` | Java service isn't running — go to the service terminal and run `mvn spring-boot:run` |
 | Tests fail after migration | `mvn test` reports compilation errors | The record migration may have broken a constructor call — ask Bob to read the error and fix it |
@@ -565,8 +549,9 @@ git branch -D demo/lab5-YYYYMMDD
 3. **Run everything before the audience arrives.** Have both terminals open and running.
    Cold Maven downloads kill demo energy. Pre-warm: `cd lab5/service && mvn dependency:resolve`.
 
-4. **Let the hook moment breathe.** When the hook fires, pause. Let the audience read the error.
-   Then say: *"Bob didn't just get blocked — it got the compiler error back. Watch it fix itself."*
+4. **The credential fix is a talking point.** When Bob externalizes `admin123` to an env var,
+   say: *"This is what a security-aware code review looks like at AI speed. It found it,
+   fixed it, and moved on — in the same pass as the Spring Boot upgrade."*
 
 5. **The parallel subagent moment is your headline.** When Security Auditor + Test Engineer
    are both running while the main migration continues, say: *"Three engineers working
