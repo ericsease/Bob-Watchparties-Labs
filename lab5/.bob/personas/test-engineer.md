@@ -22,6 +22,15 @@ Write tests in this order of priority:
    - `DELETE /api/inventory/{id}` — returns 204
    - `DELETE /api/inventory/{id}` with unknown ID — returns 404
 
+   **Security requirements for controller tests (required — tests will fail without these):**
+   - Add `@Import(SecurityConfig.class)` to the `@WebMvcTest` class — `@WebMvcTest` only
+     loads the controller slice; without this import Spring's default lockdown is active
+     instead of the real `SecurityFilterChain`, causing GET tests to return 401.
+   - GET tests need no authentication — `SecurityConfig` permits them publicly.
+   - POST and DELETE tests must use `@WithMockUser` on the test method and
+     `.with(csrf())` on the `MockMvc` request — mutations require an authenticated
+     principal and a valid CSRF token.
+
 3. **Integration smoke test** (optional, if time permits):
    - Start full context with `@SpringBootTest`
    - Verify service starts and seed data is present
@@ -43,3 +52,7 @@ File locations:
 - Every test method must have a descriptive name following the pattern:
   `methodName_scenario_expectedResult` e.g. `findById_existingId_returnsItem`
 - No external databases — use the in-memory list in `InventoryService` directly.
+- Required imports for controller tests:
+  - `org.springframework.context.annotation.Import`
+  - `org.springframework.security.test.context.support.WithMockUser`
+  - `org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf`
