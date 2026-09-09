@@ -349,14 +349,38 @@ Add the spring-boot-starter-security dependency to pom.xml to address finding AU
 > deterministically inside an AI workflow. Every pom.xml write, every time,
 > no prompt engineering required."*
 
-### Step 14 — Verify the service still starts
+### Step 14 — Configure Spring Security and restore the dashboard
+
+Adding Spring Security to the POM locked down all endpoints by default — including the GET route the Python dashboard uses. Add a `SecurityFilterChain` to allow public read access while keeping mutations authenticated:
 
 ```
-Run mvn spring-boot:run from lab5/service and confirm the service starts cleanly on the updated POM.
+Spring Security is now on the classpath but has no configuration, so it locks
+down all endpoints including GET /api/inventory — which breaks the dashboard.
+
+Add a SecurityConfig class that:
+- Permits GET /api/inventory and GET /api/inventory/** without authentication
+- Requires authentication for all other requests
+- Disables CSRF (stateless API)
+- Keeps HTTP Basic enabled for authenticated endpoints
 ```
 
-> ✅ **You should see:** Maven resolves the Spring Boot 3.2.0 parent and the service starts.
-> The command log at `.bob/hooks/command-log.txt` shows the hook and command audit trail.
+> 👤 **What to look for:** Bob writes `SecurityConfig.java` in the inventory package.
+> The dashboard terminal should recover and show live data again once the service restarts.
+
+> 🎤 **Presenter note:** *"Adding Spring Security without a configuration locks everything down
+> by default — which broke our read-only dashboard. This is the realistic next step after adding
+> the dependency: configuring the security posture intentionally. Public GET access for the
+> read API, authentication required for mutations. That's a sensible production default."*
+
+Then restart the service and verify:
+
+```
+Run mvn spring-boot:run from lab5/service and confirm the service starts cleanly.
+Check that curl http://localhost:8080/api/inventory returns data without credentials.
+```
+
+> ✅ **You should see:** Service starts, dashboard recovers and shows live inventory data again.
+> The command log at `.bob/hooks/command-log.txt` shows the audit trail.
 
 ### Step 15 — Bob generates the GitHub Actions CI pipeline
 
