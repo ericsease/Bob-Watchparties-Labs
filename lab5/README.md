@@ -284,25 +284,23 @@ Run the tests that were just written. From lab5/service, run mvn test and report
 > it. The tests the subagent wrote are passing against the modernized implementation. That's
 > the full dev cycle: write, test, confirm."*
 
-### Step 12b — Bob Findings scan *(optional, ~2 min)*
+### Step 12b — Bob Findings *(mention only, no prompt needed)*
 
-> 🎤 **Presenter note:** *"One more thing before we move to CI. Bob has a built-in Findings
-> feature — a static analysis pass that flags security issues, quality problems, and style
-> violations. Let me trigger it on the modernized code."*
+> 🎤 **Presenter note:** *"While all this has been happening, Bob Findings has been running
+> in the background automatically — no trigger needed. It's a continuous static analysis
+> engine that scans every open file for code quality issues: cyclomatic complexity,
+> maintainability index, overly long functions. When something crosses a threshold it
+> appears in the Bob Findings panel with a purple underline in the editor.*
+>
+> *You might notice it's not surfacing anything on this codebase right now — and that's
+> actually the point. Bob wrote clean, well-structured code. The legacy source is simple
+> enough that none of the quality thresholds are tripped. Bob Findings would light up if
+> you had deeply nested conditionals or 200-line functions — the kind of thing that arrives
+> in a real migration from a large legacy codebase."*
 
-Click the **Findings** icon in Bob's sidebar (the shield/magnifying glass icon), or type:
-
-```
-Run Bob Findings on the modernized inventory service source files in
-lab5/service/src/main/java/com/example/inventory/.
-Summarise any security, quality, or style findings.
-```
-
-> 👤 **What to look for:**
-> - Bob surfaces any remaining issues the subagent audit may have missed
-> - Shows that automated quality gates exist alongside the manual audit
-> - A good talking point: *"The Security Auditor subagent and Bob Findings are complementary —
->   one reasons about the code, the other applies deterministic rules."*
+> 👤 **What to show:** Open the **Bob Findings panel** in the sidebar and point it out.
+> Show the empty or clean state as a positive signal, not a gap. Mention that on a real
+> enterprise codebase with complex business logic, this panel would surface actionable issues automatically.
 
 ---
 
