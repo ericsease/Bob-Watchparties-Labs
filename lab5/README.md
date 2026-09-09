@@ -198,37 +198,37 @@ security issues, missing infrastructure, and testability gaps.
 
 ## ⚡ Act 2 — Modernize + Verify [0:17 – 0:28]
 
-> 🎤 **Presenter note:** *"We have the plan. Now I'm going to ask Bob to execute it AND
-> spawn two specialist subagents at the same time — one doing a security audit, one writing
-> tests. Three workstreams in parallel. And when the migration is done, we're going to
-> verify it actually works."*
+> 🎤 **Presenter note:** *"We have the plan. Now I'm going to use subagents for the security
+> audit and the tests. A subagent is Bob delegating a self-contained task to an isolated
+> context — it keeps the work out of our main conversation so it doesn't pollute the context
+> window, and it comes back with just the summary we need. Think of it as handing a task to
+> a specialist so the main conversation stays focused."*
+
+> ⚠️ **Important:** A subagent completes its task and returns — it is **not** a background
+> process you can interrupt. Do **not** type a new prompt while the subagent is running or
+> it will be cancelled. Wait for Bob to return control before continuing.
 
 ### Step 9 — Spawn the Security Auditor subagent
 
 ```
-Spawn a subagent to perform a security audit in the background. The subagent should:
+Spawn a subagent for the security audit. The subagent should:
 - Read lab5/.bob/personas/security-auditor.md and adopt that persona
-- Perform a full security audit of the inventory service
-- Produce a findings report as its output
+- Perform a full security audit of the inventory service source files
+- Produce a structured findings report as its output
 
-Do not do this work yourself — delegate it to a subagent so it runs in parallel
-while we continue the migration in this conversation.
+Do not do this work yourself — delegate it to a subagent to keep the audit
+out of our main conversation context.
 ```
 
-> 👀 **Watch for:** Bob using the `spawn_subagent` tool — you should see a second workstream
-> appear in the UI. If Bob starts doing the audit itself instead of spawning, say:
-> *"Please delegate that to a subagent — I want it running in the background while we
-> keep working here."*
+> 👀 **Watch for:** Bob using the `spawn_subagent` tool. The subagent runs, completes,
+> and Bob returns a summary to the main conversation.
+> If Bob does the audit inline instead of spawning, redirect:
+> *"Please delegate that to a subagent — I want to keep this context clean."*
 
-> 👤 **What to look for:** The subagent confirmation appears in chat, then Bob returns
-> focus to this conversation. Two active workstreams visible in the UI.
-
-### Step 10 — Simultaneously: modernize the service files
-
-In the **main conversation** (not the subagent), type:
+### Step 10 — Modernize the service files
 
 ```
-While the security audit runs in the background, modernize the inventory service:
+Now modernize the inventory service in this conversation:
 
 1. Convert InventoryItem.java to a Java record — replace all boilerplate with a single record declaration. Use LocalDateTime instead of Date.
 2. Refactor InventoryService.java — replace all for-loops with Stream API. Replace new Date() with LocalDateTime.now().
@@ -248,22 +248,24 @@ Apply changes in parallel where files are independent.
 ### Step 11 — Spawn the Test Engineer subagent
 
 ```
-Spawn a subagent to write tests in the background. The subagent should:
+Spawn a subagent to write the test suite. The subagent should:
 - Read lab5/.bob/personas/test-engineer.md and adopt that persona
 - Write JUnit 5 unit tests for InventoryService
 - Write @WebMvcTest controller tests for InventoryController
 - Place tests in lab5/service/src/test/java/com/example/inventory/
 
-Do not write the tests yourself — delegate to a subagent so the test suite is
-built in parallel while this conversation stays focused on the migration.
+Do not write the tests yourself — delegate to a subagent to keep test generation
+out of the main conversation context.
 ```
 
-> 👀 **Watch for:** Bob using `spawn_subagent` again. You should now have three concurrent
-> workstreams: main agent (migration) + Security Auditor + Test Engineer.
-> If Bob starts writing tests itself, redirect: *"Please spawn a subagent for that."*
+> 👀 **Watch for:** Bob using `spawn_subagent` again. The subagent runs, writes the files,
+> and returns a summary. Bob then resumes in this conversation.
+> If Bob starts writing tests inline, redirect: *"Please spawn a subagent for that."*
 
-> 🎤 **Presenter note:** *"Three engineers working simultaneously. The migration, the audit,
-> and the test suite — all in parallel. How long would this take your team to do sequentially?"*
+> 🎤 **Presenter note:** *"Two subagents used so far — one for the audit, one for the tests.
+> Each ran in its own isolated context so the findings and the test boilerplate didn't
+> pollute our migration conversation. That's the point: clean context, specialist output,
+> summary returned here."*
 
 ### Step 12 — Run the tests and verify
 
