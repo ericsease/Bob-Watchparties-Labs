@@ -206,12 +206,22 @@ security issues, missing infrastructure, and testability gaps.
 ### Step 9 — Spawn the Security Auditor subagent
 
 ```
-Read lab5/.bob/personas/security-auditor.md and take on that role as a subagent.
-Perform a full security audit of the inventory service and produce a findings report.
+Spawn a subagent to perform a security audit in the background. The subagent should:
+- Read lab5/.bob/personas/security-auditor.md and adopt that persona
+- Perform a full security audit of the inventory service
+- Produce a findings report as its output
+
+Do not do this work yourself — delegate it to a subagent so it runs in parallel
+while we continue the migration in this conversation.
 ```
 
-> 👤 **What to look for:** Bob spawns a background subagent. The main conversation continues
-> while the subagent works independently. You'll see two active workstreams in the UI.
+> 👀 **Watch for:** Bob using the `spawn_subagent` tool — you should see a second workstream
+> appear in the UI. If Bob starts doing the audit itself instead of spawning, say:
+> *"Please delegate that to a subagent — I want it running in the background while we
+> keep working here."*
+
+> 👤 **What to look for:** The subagent confirmation appears in chat, then Bob returns
+> focus to this conversation. Two active workstreams visible in the UI.
 
 ### Step 10 — Simultaneously: modernize the service files
 
@@ -238,13 +248,19 @@ Apply changes in parallel where files are independent.
 ### Step 11 — Spawn the Test Engineer subagent
 
 ```
-Read lab5/.bob/personas/test-engineer.md and take on that role as a subagent.
-Write JUnit 5 unit tests for InventoryService and @WebMvcTest controller tests
-for InventoryController. Place tests in lab5/service/src/test/java/com/example/inventory/.
+Spawn a subagent to write tests in the background. The subagent should:
+- Read lab5/.bob/personas/test-engineer.md and adopt that persona
+- Write JUnit 5 unit tests for InventoryService
+- Write @WebMvcTest controller tests for InventoryController
+- Place tests in lab5/service/src/test/java/com/example/inventory/
+
+Do not write the tests yourself — delegate to a subagent so the test suite is
+built in parallel while this conversation stays focused on the migration.
 ```
 
-> 👤 **What to look for:** A second subagent spawns. Now you have: main agent (migration) +
-> Security Auditor + Test Engineer — three concurrent workstreams.
+> 👀 **Watch for:** Bob using `spawn_subagent` again. You should now have three concurrent
+> workstreams: main agent (migration) + Security Auditor + Test Engineer.
+> If Bob starts writing tests itself, redirect: *"Please spawn a subagent for that."*
 
 > 🎤 **Presenter note:** *"Three engineers working simultaneously. The migration, the audit,
 > and the test suite — all in parallel. How long would this take your team to do sequentially?"*
