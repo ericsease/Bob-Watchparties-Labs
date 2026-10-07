@@ -25,7 +25,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/api/inventory", "/api/inventory/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/inventory", "/api/inventory/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(basic -> {});
