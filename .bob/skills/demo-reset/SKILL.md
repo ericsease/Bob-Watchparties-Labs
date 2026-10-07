@@ -1,9 +1,9 @@
 ---
 name: demo-reset
-description: Use when resetting any lab demo environment — switches off the current demo branch back to main, resolves a clean working tree, deletes the old demo branch, and runs demo-reset.sh to cut a fresh dated branch. Works for any labN directory. Trigger phrases: "reset the demo", "run demo reset", "get a fresh branch", "delete demo branch", "start over from main", "prep the demo", "reset lab", "reset lab5", "reset lab3".
+description: '# /demo-reset'
 metadata:
   user-invocable: true
-  disable-model-invocation: false
+  disable-model-invocation: true
 ---
 
 # Lab Demo Reset
