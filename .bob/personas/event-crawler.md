@@ -45,7 +45,7 @@ Try each URL in order until one returns usable event data:
 ## Constraints
 - **Try both URLs before giving up.** If both fail or return no parseable events, say:
   "Live crawl failed — loading local_events_fallback.json instead."
-  Then read `data/local_events_fallback.json` and return its contents.
+  Then read `lab6/data/local_events_fallback.json` and return its contents.
 - **Never invent events** that were not on the crawled page or in the fallback file.
 - **Only include events within the next 90 days** from today's date.
 - Map to categories conservatively — if unsure whether an event boosts Frozen food, leave it out.

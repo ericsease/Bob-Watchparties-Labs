@@ -8,6 +8,11 @@
             "type": "command",
             "command": "sh .bob/hooks/check-secrets.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "sh .bob/hooks/check-data-quality.sh",
+            "timeout": 10
           }
         ]
       }

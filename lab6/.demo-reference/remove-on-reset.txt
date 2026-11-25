@@ -1,4 +1,3 @@
 lab6/notebooks/reorder_alerts.xlsx
 lab6/notebooks/financial_summary.xlsx
 lab6/notebooks/inventory.db
-lab6/.bob/hooks/command-log.txt

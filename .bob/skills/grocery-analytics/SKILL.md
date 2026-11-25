@@ -116,7 +116,7 @@ with pd.ExcelWriter("output_file.xlsx", engine="openpyxl") as writer:
     df_tab3.to_excel(writer, sheet_name="Tab 3 Name", index=False)
 ```
 
-Output files go to the working directory (never overwrite the source `data/` files).
+Output files go to the working directory (never overwrite the source `lab6/data/` files).
 
 ---
 
@@ -148,8 +148,8 @@ Always label axes and add a descriptive title.
 ### Standard join pattern
 
 ```python
-supplier_df = pd.read_csv("data/supplier_prices.csv")
-promo_df    = pd.read_csv("data/promo_calendar.csv", parse_dates=["week"])
+supplier_df = pd.read_csv("../data/supplier_prices.csv")
+promo_df    = pd.read_csv("../data/promo_calendar.csv", parse_dates=["week"])
 
 # Join supplier prices onto inventory (SKU-level, left join keeps all inventory rows)
 df_enriched = df.merge(

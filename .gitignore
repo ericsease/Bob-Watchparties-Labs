@@ -10,7 +10,7 @@ MCP-Workaround/
 # Lab 6 run outputs (created by participants / test runs)
 lab6/notebooks/reorder_alerts.xlsx
 lab6/notebooks/financial_summary.xlsx
-lab6/.bob/hooks/command-log.txt
+lab6/notebooks/.ipynb_checkpoints/
 
 # Python
 __pycache__/

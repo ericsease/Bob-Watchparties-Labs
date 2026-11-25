@@ -45,19 +45,14 @@ lab6/
 │   ├── starter.ipynb                  — stub notebook (imports + data load cell only)
 │   └── solution.ipynb                 — completed reference notebook (facilitator only)
 ├── requirements.txt                   — pandas, matplotlib, openpyxl, notebook, requests
-├── .bob/
-│   ├── custom_modes.yaml              — 📊 Data Analyst Architect mode
-│   ├── settings.json                  — hooks (data quality gate, command log)
-│   ├── mcp.json                       — fetch server for event crawling
-│   ├── hooks/
-│   │   ├── check-data-quality.sh      — PreToolUse: warn if writing over raw data file
-│   │   └── log-commands.sh            — PostToolUse: log executed commands
-│   ├── skills/
-│   │   └── grocery-analytics/
-│   │       └── SKILL.md               — analytics playbook (trigger phrases, patterns)
-│   └── personas/
-│       ├── eda-analyst.md             — EDA subagent persona
-│       └── event-crawler.md           — event data subagent persona
+(Bob config is NOT under lab6/ — Bob reads one .bob/ at the repo root, so Lab 6 files live there:)
+.bob/custom_modes.yaml                 — 📊 Data Analyst Architect mode (alongside ☕ Java Architect)
+.bob/settings.json                     — shared hooks; adds the data-quality gate
+.bob/hooks/check-data-quality.sh       — PreToolUse: deny writes to lab6/data/*.xlsx|csv
+.bob/hooks/session-context.sh          — SessionStart: Lab 6 context on lab6 branches
+.bob/skills/grocery-analytics/SKILL.md — analytics playbook (trigger phrases, patterns)
+.bob/personas/eda-analyst.md           — EDA subagent persona
+.bob/personas/event-crawler.md         — event data subagent persona
 └── demo-deck/                         — facilitator slide deck (PPTX)
 ```
 
@@ -171,20 +166,20 @@ between spreadsheet and automation.
 #### Relevant Files
 - `lab6/data/grocery_inventory.xlsx` — primary data artifact
 - `lab6/notebooks/starter.ipynb` — participant's working file
-- `lab6/.bob/custom_modes.yaml` — Data Analyst Architect mode
-- `lab6/.bob/skills/grocery-analytics/SKILL.md` — analytics playbook
+- `.bob/custom_modes.yaml` — Data Analyst Architect mode
+- `.bob/skills/grocery-analytics/SKILL.md` — analytics playbook
 
 #### Todo List
 - [ ] Create `lab6/data/grocery_inventory.xlsx` with 300-row dataset per spec above
 - [ ] Create `lab6/data/grocery_inventory.csv` as a CSV export of same data
 - [ ] Create `lab6/notebooks/starter.ipynb` with only: markdown title cell + imports cell + empty "Load Data" cell
 - [ ] Create `lab6/requirements.txt` (pandas, matplotlib, openpyxl, notebook, requests)
-- [ ] Create `lab6/.bob/custom_modes.yaml` — Data Analyst Architect mode
-- [ ] Create `lab6/.bob/skills/grocery-analytics/SKILL.md` — analytics playbook
-- [ ] Create `lab6/.bob/settings.json` — hooks config
-- [ ] Create `lab6/.bob/mcp.json` — fetch server registration
-- [ ] Create `lab6/.bob/hooks/check-data-quality.sh` — warn on raw data overwrite
-- [ ] Create `lab6/.bob/hooks/log-commands.sh` — command log (copy from lab5 pattern)
+- [ ] Create `.bob/custom_modes.yaml` — Data Analyst Architect mode
+- [ ] Create `.bob/skills/grocery-analytics/SKILL.md` — analytics playbook
+- [ ] Create `.bob/settings.json` — hooks config
+- [ ] Create `.bob/mcp.json` — fetch server registration
+- [ ] Create `.bob/hooks/check-data-quality.sh` — warn on raw data overwrite
+- [ ] Create `.bob/hooks/log-commands.sh` (shared, already exists) — command log (copy from lab5 pattern)
 - [ ] Write Stage 1 section of `lab6/README.md`
 
 ---
@@ -234,15 +229,15 @@ up Stage 3). This is the "code generation at scale" moment.
    `reorder_alerts.xlsx` created. Facilitator highlights STR-C outlier in the store chart.
 
 #### Relevant Files
-- `lab6/.bob/personas/eda-analyst.md` — EDA subagent persona
-- `lab6/.bob/personas/event-crawler.md` — event crawler persona
-- `lab6/.bob/mcp.json` — fetch server for live event crawling
+- `.bob/personas/eda-analyst.md` — EDA subagent persona
+- `.bob/personas/event-crawler.md` — event crawler persona
+- `.bob/mcp.json` — fetch server for live event crawling
 - `lab6/data/local_events_fallback.json` — offline fallback event data
 - `lab6/notebooks/starter.ipynb` — participant's working file
 
 #### Todo List
-- [ ] Create `lab6/.bob/personas/eda-analyst.md`
-- [ ] Create `lab6/.bob/personas/event-crawler.md`
+- [ ] Create `.bob/personas/eda-analyst.md`
+- [ ] Create `.bob/personas/event-crawler.md`
 - [ ] Create `lab6/data/local_events_fallback.json` with 6–8 realistic Düsseldorf/NRW events
 - [ ] Write Stage 2 section of `lab6/README.md`
 - [ ] Write the "analyst brief" as a pre-formatted prompt block in README for facilitator copy-paste
@@ -301,7 +296,7 @@ inventory decisions without building a custom integration.
 
 #### Relevant Files
 - `lab6/data/local_events_fallback.json` — fallback event data
-- `lab6/.bob/mcp.json` — fetch server
+- `.bob/mcp.json` — fetch server
 - `lab6/notebooks/starter.ipynb` — participant's working file
 
 #### Todo List
@@ -370,7 +365,7 @@ polished Excel deliverable, generated by Bob without manual copy-pasting.
 
 ### Custom Mode: 📊 Data Analyst Architect
 
-**File:** `lab6/.bob/custom_modes.yaml`
+**File:** `.bob/custom_modes.yaml`
 
 **Slug:** `data-analyst-architect`
 
@@ -389,7 +384,7 @@ what it is doing before writing code. Surfaces data quality issues proactively.
 
 ### Skill: grocery-analytics
 
-**File:** `lab6/.bob/skills/grocery-analytics/SKILL.md`
+**File:** `.bob/skills/grocery-analytics/SKILL.md`
 
 **Trigger phrases:** "analyse inventory", "check data quality", "reorder alert",
 "demand forecast", "event boost", "stock report", "export to Excel", "EDA"
@@ -427,17 +422,17 @@ what it is doing before writing code. Surfaces data quality issues proactively.
 
 **`log-commands.sh` (PostToolUse)**
 - Same pattern as Lab 5 — logs all `execute_command` calls with timestamp
-- File: `lab6/.bob/hooks/command-log.txt`
+- File: `.bob/hooks/command-log.txt` (shared)
 
 ### MCP Configuration
 
-**`lab6/.bob/mcp.json`**
+**`.bob/mcp.json`**
 ```json
 {
   "mcpServers": {
     "fetch": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      "args": ["-y", "mcp-fetch-server"]
     }
   }
 }

@@ -19,8 +19,8 @@
 
 | File | What changed |
 |---|---|
-| `lab6/.bob/personas/event-crawler.md` | Crawl targets replaced: 3 Stuttgart URLs → 2 Düsseldorf URLs; constraint text updated ("three" → "both") |
-| `lab6/.bob/skills/grocery-analytics/SKILL.md` | Seasonal event examples updated: Volksfest/matchdays → Rheinkirmes/Fortuna matchdays |
+| `.bob/personas/event-crawler.md` | Crawl targets replaced: 3 Stuttgart URLs → 2 Düsseldorf URLs; constraint text updated ("three" → "both") |
+| `.bob/skills/grocery-analytics/SKILL.md` | Seasonal event examples updated: Volksfest/matchdays → Rheinkirmes/Fortuna matchdays |
 | `lab6/README.md` | 20 Stuttgart references replaced: URL table, event table, Stage 2 subagent prompt, Stage 3 crawl prompt, Act 3 expected output, facilitator tips, section heading |
 | `lab6/demo-deck/README.md` | Slide 9 crawler diagram, Slide 12 headline + timeline, Slide 14 live crawl URL, Stage 4 "optional" label removed |
 | `lab6-plan.md` | Region context line, live crawl URL list, fallback JSON sample block, all stage flow descriptions, todo list items |
@@ -41,14 +41,14 @@
 | `lab6/requirements.txt` | Python dependencies: pandas, openpyxl, matplotlib, notebook |
 | `lab6/notebooks/starter.ipynb` | Participant notebook — 4-stage stubs with copy-paste prompt hints |
 | `lab6/notebooks/solution.ipynb` | Fully working reference notebook — facilitator only, executes end-to-end cleanly |
-| `lab6/.bob/custom_modes.yaml` | 📊 Data Analyst Architect custom mode — 7 rules including read-before-code and explain-every-cell |
-| `lab6/.bob/skills/grocery-analytics/SKILL.md` | Full analytics playbook: column reference, reorder formula, boost multipliers, CSV join patterns, SQLite patterns, KPI reference |
-| `lab6/.bob/personas/eda-analyst.md` | EDA subagent persona — generates 6-cell notebook from plain-English brief |
-| `lab6/.bob/personas/event-crawler.md` | Event crawler subagent — crawls Düsseldorf URLs, returns structured JSON |
-| `lab6/.bob/mcp.json` | MCP fetch server config for Stage 3 live crawl |
-| `lab6/.bob/settings.json` | Hooks: data quality gate on file writes + command log |
-| `lab6/.bob/hooks/check-data-quality.sh` | Pre-write hook — checks for negative stock and missing prices |
-| `lab6/.bob/hooks/log-commands.sh` | Logs all Bob-generated shell commands to `hooks/command-log.txt` |
+| `.bob/custom_modes.yaml` | 📊 Data Analyst Architect custom mode — 7 rules including read-before-code and explain-every-cell |
+| `.bob/skills/grocery-analytics/SKILL.md` | Full analytics playbook: column reference, reorder formula, boost multipliers, CSV join patterns, SQLite patterns, KPI reference |
+| `.bob/personas/eda-analyst.md` | EDA subagent persona — generates 6-cell notebook from plain-English brief |
+| `.bob/personas/event-crawler.md` | Event crawler subagent — crawls Düsseldorf URLs, returns structured JSON |
+| `.bob/mcp.json` | MCP fetch server config for Stage 3 live crawl |
+| `.bob/settings.json` | Hooks: data quality gate on file writes + command log |
+| `.bob/hooks/check-data-quality.sh` | Pre-write hook — checks for negative stock and missing prices |
+| `.bob/hooks/log-commands.sh` | Logs all Bob-generated shell commands to `hooks/command-log.txt` |
 | `lab6/README.md` | Full facilitator guide — stage-by-stage script, copy-paste prompts, fallback tips, dataset reference |
 | `lab6/demo-deck/README.md` | 19-slide deck outline with timing, talking points, and facilitator notes |
 | `lab6-plan.md` | Planning document — design decisions, stage breakdown, todo lists |
@@ -65,9 +65,9 @@ None. This is a workshop lab (not a software project). The solution notebook (`n
 
 | Item | Detail |
 |---|---|
-| `lab6/.bob/mcp.json` | Registers the MCP fetch server so Bob can crawl live event URLs in Stage 3 |
-| `lab6/.bob/settings.json` | Pre-write hook (`check-data-quality.sh`) and command-log hook (`log-commands.sh`) |
-| `lab6/.bob/custom_modes.yaml` | Custom Bob mode scoped to the lab6 directory |
+| `.bob/mcp.json` | Registers the MCP fetch server so Bob can crawl live event URLs in Stage 3 |
+| `.bob/settings.json` | Pre-write hook (`check-data-quality.sh`) and command-log hook (`log-commands.sh`) |
+| `.bob/custom_modes.yaml` | Custom Bob mode scoped to the lab6 directory |
 | `lab6/data/generate_data.py` | Standalone data generator — reproducible dataset reset at any time via `python lab6/data/generate_data.py` |
 
 ---
@@ -82,7 +82,6 @@ None applicable — this is a mock dataset workshop. No real credentials or secr
 
 - [ ] Test the live crawl URLs against the actual Düsseldorf event sites before the workshop to confirm MCP fetch can parse their HTML structure
 - [ ] Verify `solution.ipynb` Stage 3 runs cleanly with the Düsseldorf fallback events (boost output references were updated but notebook execution against new event names was not re-verified)
-- [ ] Add a `lab6/.bob/rules/` directory with a session-summary rule (matching Lab 5 convention) if desired
 - [ ] Consider translating the CFO email draft prompt (Stage 4) into German for the Düsseldorf audience
 - [ ] Print Slides 2 and 15 of the demo deck as a one-page participant handout before the workshop
 - [ ] Confirm Python environment with `pip install -r lab6/requirements.txt` on the demo machine ahead of time
