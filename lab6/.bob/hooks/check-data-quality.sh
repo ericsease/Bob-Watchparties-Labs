@@ -1,24 +1,34 @@
-#!/usr/bin/env bash
-# PreToolUse hook — warns before any write operation targets raw data files.
-# Keeps participants from accidentally overwriting the source dataset.
+#!/bin/sh
+# check-data-quality.sh
+#
+# PreToolUse hook — protects the raw source dataset in lab6/data/.
+# Fires before: write_file, apply_diff, search_and_replace, insert_content
+#
+# Bob sends a JSON payload on stdin; the target file is tool_input.path.
+# If it points at an .xlsx or .csv inside a data/ directory, the write is denied
+# and Bob is told why (so it can write to a new output file instead).
+# Otherwise the hook exits 0 and the write proceeds.
 
-TOOL_PATH="${1:-}"
+PAYLOAD=$(cat)
 
-# Check if the target path is inside a data/ directory and is .xlsx or .csv
-if [[ "$TOOL_PATH" == *"/data/"* && ( "$TOOL_PATH" == *.xlsx || "$TOOL_PATH" == *.csv ) ]]; then
-  echo ""
-  echo "⚠️  DATA FILE PROTECTION WARNING"
-  echo "   You are about to write to a raw data file:"
-  echo "   $TOOL_PATH"
-  echo ""
-  echo "   Raw data files in data/ should be treated as immutable."
-  echo "   Consider writing your output to a new file instead, e.g.:"
-  echo "     reorder_alerts.xlsx"
-  echo "     financial_summary.xlsx"
-  echo ""
-  echo "   If you intentionally want to regenerate the source data,"
-  echo "   run: python lab6/data/generate_data.py"
-  echo ""
-fi
+FILE_PATH=$(echo "$PAYLOAD" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+print(data.get('tool_input', {}).get('path', ''))
+" 2>/dev/null || echo "")
+
+case "$FILE_PATH" in
+  */data/*.xlsx|*/data/*.csv|data/*.xlsx|data/*.csv)
+    cat <<EOF
+{
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "Raw data files in data/ are immutable ($FILE_PATH). Write your output to a new file instead, e.g. reorder_alerts.xlsx or financial_summary.xlsx. To regenerate the source data on purpose, run: python data/generate_data.py"
+  }
+}
+EOF
+    ;;
+esac
 
 exit 0

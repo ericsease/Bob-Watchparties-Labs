@@ -2,7 +2,8 @@
   "mcpServers": {
     "fetch": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      "args": ["-y", "mcp-fetch-server"],
+      "description": "General-purpose HTTP fetch MCP — lets Bob retrieve any public URL. Used in Stage 3 to crawl live Düsseldorf event listings."
     }
   }
 }

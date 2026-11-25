@@ -2,11 +2,12 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "write_file|apply_diff",
+        "matcher": "write_file|apply_diff|search_and_replace|insert_content",
         "hooks": [
           {
             "type": "command",
-            "command": "bash lab6/.bob/hooks/check-data-quality.sh \"$TOOL_INPUT_PATH\""
+            "command": "sh .bob/hooks/check-data-quality.sh",
+            "timeout": 10
           }
         ]
       }
@@ -17,7 +18,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash lab6/.bob/hooks/log-commands.sh \"$TOOL_INPUT_COMMAND\""
+            "command": "sh .bob/hooks/log-commands.sh",
+            "timeout": 5
           }
         ]
       }

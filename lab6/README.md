@@ -38,11 +38,14 @@ board-ready financial summary — all through plain-English prompts.
 ## Setup
 
 ```bash
+# All commands and file paths in this lab are relative to lab6/
+cd lab6
+
 # 1. Install Python dependencies
-pip install -r lab6/requirements.txt
+pip install -r requirements.txt
 
 # 2. Open the starter notebook
-jupyter notebook lab6/notebooks/starter.ipynb
+jupyter notebook notebooks/starter.ipynb
 ```
 
 **Bob setup:**
@@ -62,7 +65,7 @@ and runs a data quality audit.
 ### Setup (5 min)
 
 - Open Bob. Confirm the mode indicator shows **📊 Data Analyst Architect**
-- Open `lab6/notebooks/starter.ipynb` in Jupyter
+- Open `notebooks/starter.ipynb` in Jupyter
 - Run the **Imports** cell (Cell 2) — confirm `✅ Imports OK`
 
 ---
@@ -72,7 +75,7 @@ and runs a data quality audit.
 **Copy-paste prompt:**
 
 ```
-Read lab6/data/grocery_inventory.xlsx and tell me what data we have, column by column.
+Read data/grocery_inventory.xlsx and tell me what data we have, column by column.
 Describe the data type, what it represents, and give me a sample value for each column.
 ```
 
@@ -87,7 +90,7 @@ is Rule 1 of the Data Analyst Architect mode.
 **Copy-paste prompt:**
 
 ```
-Write me a pandas cell that loads lab6/data/grocery_inventory.xlsx cleanly:
+Write me a pandas cell that loads data/grocery_inventory.xlsx cleanly:
 - Sheet name: Inventory
 - Parse the 'week' column as a date
 - Cast 'on_promotion' as boolean
@@ -177,7 +180,7 @@ region this month. Try these URLs in order:
 1. https://www.visitduesseldorf.de/erleben/veranstaltungen/veranstaltungskalender#/event
 2. https://rausgegangen.de/duesseldorf/
 Return the results as JSON matching the local_events_fallback.json schema.
-If both crawls fail, load lab6/data/local_events_fallback.json instead.
+If both crawls fail, load data/local_events_fallback.json instead.
 ```
 
 Both subagents run simultaneously. EDA cells return first (~60 sec), event list follows.
@@ -287,7 +290,7 @@ Show the raw page content Bob retrieved, then the structured output — this is 
 **If all crawls fail or return nothing useful:**
 
 ```
-The crawls didn't return useful data. Load lab6/data/local_events_fallback.json
+The crawls didn't return useful data. Load data/local_events_fallback.json
 and use that as our events list.
 ```
 
@@ -420,7 +423,7 @@ What would you do with this list on Monday morning?"*
 ### If wifi fails during Stage 3
 Use the fallback file directly:
 ```
-Load lab6/data/local_events_fallback.json as the events data and proceed.
+Load data/local_events_fallback.json as the events data and proceed.
 ```
 The fallback has 8 Düsseldorf-area events covering all major categories and attendance tiers.
 
@@ -525,7 +528,7 @@ itself a teaching moment about data entry discipline.
 |---|---|
 | `https://www.visitduesseldorf.de/erleben/veranstaltungen/veranstaltungskalender#/event` | Primary live crawl target |
 | `https://rausgegangen.de/duesseldorf/` | Backup |
-| `lab6/data/local_events_fallback.json` | Offline fallback — always works |
+| `data/local_events_fallback.json` | Offline fallback — always works |
 
 **Fallback events included:**
 
@@ -550,5 +553,5 @@ A fully completed reference notebook is at `notebooks/solution.ipynb`.
 To regenerate the source dataset at any time:
 
 ```bash
-python lab6/data/generate_data.py
+python data/generate_data.py
 ```
