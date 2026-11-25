@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "write_file|apply_diff",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash lab6/.bob/hooks/check-data-quality.sh \"$TOOL_INPUT_PATH\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "execute_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash lab6/.bob/hooks/log-commands.sh \"$TOOL_INPUT_COMMAND\""
+          }
+        ]
+      }
+    ]
+  }
+}

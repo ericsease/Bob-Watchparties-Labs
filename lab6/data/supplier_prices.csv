@@ -1,0 +1,51 @@
+sku,product_name,category,supplier_name,contract_price_eur,inventory_cost_eur,price_mismatch,min_order_qty,contract_valid_until
+BEER-001,Pilsner Lager 500ml 6-pack,Beer/Spirits,Getränke Hoffmann GmbH,4.2,4.2,False,12,2027-03-31
+BEER-002,Weizenbier 500ml 6-pack,Beer/Spirits,Getränke Hoffmann GmbH,4.8,4.8,False,12,2027-03-31
+BEER-003,Alkoholfrei Lager 330ml 12-pack,Beer/Spirits,Getränke Hoffmann GmbH,6.5,6.5,False,6,2027-03-31
+BEER-004,Rotwein Dornfelder 0.75l,Beer/Spirits,Getränke Hoffmann GmbH,3.8,3.8,False,48,2027-03-31
+BEER-005,Weißwein Riesling 0.75l,Beer/Spirits,Getränke Hoffmann GmbH,4.2,4.2,False,6,2027-03-31
+BEER-006,Prosecco 0.75l,Beer/Spirits,Getränke Hoffmann GmbH,4.9,4.9,False,48,2027-03-31
+BEER-007,Whisky Blend 0.7l,Beer/Spirits,Getränke Hoffmann GmbH,14.5,14.5,False,12,2027-03-31
+BEER-008,Sekt Brut 0.75l,Beer/Spirits,Getränke Hoffmann GmbH,3.9,3.9,False,24,2027-03-31
+PROD-001,Tomaten Rispentomaten 500g,Produce,Frischmarkt Bayern KG,0.8,0.8,False,12,2027-03-31
+PROD-002,Kartoffeln festkochend 2.5kg,Produce,Frischmarkt Bayern KG,1.2,1.2,False,12,2027-03-31
+PROD-003,Äpfel Elstar 1kg,Produce,Frischmarkt Bayern KG,1.1,1.1,False,24,2027-03-31
+PROD-004,Bananen 1kg,Produce,Frischmarkt Bayern KG,1.03,0.9,True,6,2027-03-31
+PROD-005,Gurken Salatgurke Stück,Produce,Frischmarkt Bayern KG,0.4,0.4,False,48,2027-03-31
+PROD-006,Paprika Rot 3-Pack,Produce,Frischmarkt Bayern KG,1.46,1.3,True,48,2027-03-31
+PROD-007,Zwiebeln 1kg,Produce,Frischmarkt Bayern KG,0.6,0.6,False,6,2027-03-31
+PROD-008,Karotten 1kg,Produce,Frischmarkt Bayern KG,0.7,0.7,False,12,2027-03-31
+PROD-009,Salat Eisberg Kopf,Produce,Frischmarkt Bayern KG,0.5,0.5,False,6,2027-03-31
+PROD-010,Zucchini 500g,Produce,Frischmarkt Bayern KG,0.9,0.9,False,12,2027-03-31
+PROD-011,Erdbeeren 500g,Produce,Frischmarkt Bayern KG,1.8,1.8,False,12,2027-03-31
+PROD-012,Trauben kernlos 500g,Produce,Frischmarkt Bayern KG,2.1,2.1,False,48,2027-03-31
+DAIR-001,Vollmilch 3.5% 1L,Dairy,Molkerei Allgäu AG,0.85,0.85,False,12,2027-03-31
+DAIR-002,Fettarme Milch 1.5% 1L,Dairy,Molkerei Allgäu AG,0.8,0.8,False,12,2027-03-31
+DAIR-003,Naturjoghurt 500g,Dairy,Molkerei Allgäu AG,0.74,0.7,True,48,2027-03-31
+DAIR-004,Fruchtjoghurt Erdbeere 150g 4-Pack,Dairy,Molkerei Allgäu AG,1.2,1.2,False,48,2027-03-31
+DAIR-005,Gouda Scheiben 400g,Dairy,Molkerei Allgäu AG,2.65,2.4,True,6,2027-03-31
+DAIR-006,Camembert 125g,Dairy,Molkerei Allgäu AG,1.24,1.1,True,48,2027-03-31
+DAIR-007,Butter 250g,Dairy,Molkerei Allgäu AG,1.8,1.8,False,48,2027-03-31
+DAIR-008,Sahne 200ml,Dairy,Molkerei Allgäu AG,0.9,0.9,False,6,2027-03-31
+DAIR-009,Quark Magerquark 500g,Dairy,Molkerei Allgäu AG,0.8,0.8,False,48,2027-03-31
+DAIR-010,Mozzarella 125g,Dairy,Molkerei Allgäu AG,0.95,0.95,False,48,2027-03-31
+BAKE-001,Vollkornbrot 500g,Bakery,Bäckerei Zulieferer Süd,1.2,1.2,False,12,2027-03-31
+BAKE-002,Brötchen 6-Pack,Bakery,Bäckerei Zulieferer Süd,0.9,0.9,False,48,2027-03-31
+BAKE-003,Laugenbrezel groß Stück,Bakery,Bäckerei Zulieferer Süd,0.5,0.5,False,12,2027-03-31
+BAKE-004,Toastbrot 750g,Bakery,Bäckerei Zulieferer Süd,0.95,0.95,False,12,2027-03-31
+BAKE-005,Croissant Butter 2-Pack,Bakery,Bäckerei Zulieferer Süd,1.3,1.3,False,48,2027-03-31
+BAKE-006,Marmorkuchen 400g,Bakery,Bäckerei Zulieferer Süd,1.92,1.8,True,24,2027-03-31
+BAKE-007,Schwarzbrot 500g,Bakery,Bäckerei Zulieferer Süd,1.1,1.1,False,12,2027-03-31
+BAKE-008,Zimtschnecke 2-Pack,Bakery,Bäckerei Zulieferer Süd,1.6,1.6,False,12,2027-03-31
+FROZ-001,Tiefkühlpizza Margherita 400g,Frozen,TK-Logistik Rheinland,1.8,1.8,False,24,2027-03-31
+FROZ-002,Pommes Frites 750g,Frozen,TK-Logistik Rheinland,1.2,1.2,False,12,2027-03-31
+FROZ-003,Tiefkühlerbsen 450g,Frozen,TK-Logistik Rheinland,0.9,0.9,False,6,2027-03-31
+FROZ-004,Schnitzel paniert 2-Pack,Frozen,TK-Logistik Rheinland,3.2,3.2,False,24,2027-03-31
+FROZ-005,Vanilleeis 500ml,Frozen,TK-Logistik Rheinland,1.9,1.9,False,6,2027-03-31
+FROZ-006,Fischstäbchen 400g,Frozen,TK-Logistik Rheinland,2.1,2.1,False,6,2027-03-31
+FROZ-007,Spinat gehackt 450g,Frozen,TK-Logistik Rheinland,0.85,0.85,False,6,2027-03-31
+FROZ-008,Schokoladeneis Stieleis 6-Pack,Frozen,TK-Logistik Rheinland,2.4,2.4,False,48,2027-03-31
+HBC-001,Waschmittel Flüssig 1.5L,HBC,Drogeriehandel Nord GmbH,4.5,4.5,False,48,2027-03-31
+HBC-002,Zahncreme 75ml,HBC,Drogeriehandel Nord GmbH,0.9,0.9,False,24,2027-03-31
+HBC-003,Shampoo 300ml,HBC,Drogeriehandel Nord GmbH,1.8,1.8,False,12,2027-03-31
+HBC-004,Duschgel 250ml,HBC,Drogeriehandel Nord GmbH,1.2,1.2,False,24,2027-03-31

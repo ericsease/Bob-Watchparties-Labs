@@ -1,0 +1,79 @@
+sku,product_name,category,week,promo_type,discount_pct,approved_by
+BEER-001,Pilsner Lager 500ml 6-pack,Beer/Spirits,2026-09-29,Clearance,25,auto
+BEER-001,Pilsner Lager 500ml 6-pack,Beer/Spirits,2026-10-27,Weekend Special,5,category_mgr
+BEER-002,Weizenbier 500ml 6-pack,Beer/Spirits,2026-09-22,Weekend Special,25,category_mgr
+BEER-002,Weizenbier 500ml 6-pack,Beer/Spirits,2026-10-13,Loyalty Card,30,auto
+BEER-002,Weizenbier 500ml 6-pack,Beer/Spirits,2026-11-10,Loyalty Card,30,category_mgr
+BEER-003,Alkoholfrei Lager 330ml 12-pack,Beer/Spirits,2026-09-01,Clearance,5,auto
+BEER-004,Rotwein Dornfelder 0.75l,Beer/Spirits,2026-10-13,2-for-1,5,category_mgr
+BEER-005,Weißwein Riesling 0.75l,Beer/Spirits,2026-10-27,Clearance,15,category_mgr
+BEER-005,Weißwein Riesling 0.75l,Beer/Spirits,2026-11-10,Clearance,10,regional_mgr
+BEER-006,Prosecco 0.75l,Beer/Spirits,2026-10-06,Loyalty Card,10,category_mgr
+BEER-006,Prosecco 0.75l,Beer/Spirits,2026-11-10,Loyalty Card,0,auto
+BEER-008,Sekt Brut 0.75l,Beer/Spirits,2026-09-01,Clearance,5,regional_mgr
+BEER-008,Sekt Brut 0.75l,Beer/Spirits,2026-09-08,Loyalty Card,5,regional_mgr
+BEER-008,Sekt Brut 0.75l,Beer/Spirits,2026-09-22,Loyalty Card,30,regional_mgr
+PROD-003,Äpfel Elstar 1kg,Produce,2026-09-08,2-for-1,10,regional_mgr
+PROD-003,Äpfel Elstar 1kg,Produce,2026-09-29,New Listing,25,auto
+PROD-003,Äpfel Elstar 1kg,Produce,2026-11-10,Loyalty Card,15,regional_mgr
+PROD-004,Bananen 1kg,Produce,2026-11-10,Clearance,30,regional_mgr
+PROD-005,Gurken Salatgurke Stück,Produce,2026-09-29,Clearance,10,regional_mgr
+PROD-006,Paprika Rot 3-Pack,Produce,2026-09-08,2-for-1,25,auto
+PROD-009,Salat Eisberg Kopf,Produce,2026-10-20,Weekend Special,25,category_mgr
+PROD-010,Zucchini 500g,Produce,2026-09-08,Clearance,25,category_mgr
+PROD-010,Zucchini 500g,Produce,2026-11-03,New Listing,15,category_mgr
+PROD-011,Erdbeeren 500g,Produce,2026-09-08,2-for-1,20,category_mgr
+PROD-011,Erdbeeren 500g,Produce,2026-10-13,Weekend Special,10,regional_mgr
+PROD-012,Trauben kernlos 500g,Produce,2026-09-08,Weekend Special,0,regional_mgr
+PROD-012,Trauben kernlos 500g,Produce,2026-10-06,Clearance,10,regional_mgr
+PROD-012,Trauben kernlos 500g,Produce,2026-11-10,Clearance,5,regional_mgr
+PROD-012,Trauben kernlos 500g,Produce,2026-11-17,Weekend Special,20,category_mgr
+DAIR-001,Vollmilch 3.5% 1L,Dairy,2026-10-20,New Listing,30,auto
+DAIR-002,Fettarme Milch 1.5% 1L,Dairy,2026-09-08,New Listing,25,regional_mgr
+DAIR-002,Fettarme Milch 1.5% 1L,Dairy,2026-10-20,Clearance,20,auto
+DAIR-003,Naturjoghurt 500g,Dairy,2026-11-17,New Listing,10,auto
+DAIR-004,Fruchtjoghurt Erdbeere 150g 4-Pack,Dairy,2026-09-08,2-for-1,10,auto
+DAIR-004,Fruchtjoghurt Erdbeere 150g 4-Pack,Dairy,2026-11-10,Weekend Special,20,auto
+DAIR-005,Gouda Scheiben 400g,Dairy,2026-09-29,2-for-1,5,regional_mgr
+DAIR-005,Gouda Scheiben 400g,Dairy,2026-10-06,Weekend Special,20,category_mgr
+DAIR-006,Camembert 125g,Dairy,2026-09-15,Weekend Special,20,regional_mgr
+DAIR-006,Camembert 125g,Dairy,2026-09-22,Loyalty Card,25,category_mgr
+DAIR-006,Camembert 125g,Dairy,2026-10-13,Weekend Special,25,category_mgr
+DAIR-006,Camembert 125g,Dairy,2026-10-20,Weekend Special,0,category_mgr
+DAIR-007,Butter 250g,Dairy,2026-10-13,2-for-1,30,auto
+DAIR-008,Sahne 200ml,Dairy,2026-10-27,2-for-1,5,auto
+DAIR-009,Quark Magerquark 500g,Dairy,2026-10-13,Weekend Special,25,auto
+DAIR-010,Mozzarella 125g,Dairy,2026-09-01,Loyalty Card,5,auto
+DAIR-010,Mozzarella 125g,Dairy,2026-09-22,New Listing,10,auto
+BAKE-001,Vollkornbrot 500g,Bakery,2026-09-15,2-for-1,5,regional_mgr
+BAKE-001,Vollkornbrot 500g,Bakery,2026-11-17,Clearance,20,category_mgr
+BAKE-002,Brötchen 6-Pack,Bakery,2026-09-22,2-for-1,10,category_mgr
+BAKE-002,Brötchen 6-Pack,Bakery,2026-09-29,New Listing,5,category_mgr
+BAKE-002,Brötchen 6-Pack,Bakery,2026-10-13,Clearance,10,category_mgr
+BAKE-003,Laugenbrezel groß Stück,Bakery,2026-10-20,New Listing,20,regional_mgr
+BAKE-005,Croissant Butter 2-Pack,Bakery,2026-09-01,Clearance,15,auto
+BAKE-005,Croissant Butter 2-Pack,Bakery,2026-09-15,2-for-1,25,auto
+BAKE-007,Schwarzbrot 500g,Bakery,2026-09-01,Clearance,15,regional_mgr
+BAKE-007,Schwarzbrot 500g,Bakery,2026-11-10,Clearance,10,category_mgr
+BAKE-008,Zimtschnecke 2-Pack,Bakery,2026-09-08,New Listing,25,regional_mgr
+FROZ-002,Pommes Frites 750g,Frozen,2026-09-22,Weekend Special,10,category_mgr
+FROZ-002,Pommes Frites 750g,Frozen,2026-10-06,New Listing,10,category_mgr
+FROZ-002,Pommes Frites 750g,Frozen,2026-11-03,Clearance,0,auto
+FROZ-003,Tiefkühlerbsen 450g,Frozen,2026-09-01,Weekend Special,25,regional_mgr
+FROZ-003,Tiefkühlerbsen 450g,Frozen,2026-10-06,Clearance,20,auto
+FROZ-003,Tiefkühlerbsen 450g,Frozen,2026-10-13,2-for-1,15,regional_mgr
+FROZ-003,Tiefkühlerbsen 450g,Frozen,2026-10-20,Weekend Special,20,category_mgr
+FROZ-003,Tiefkühlerbsen 450g,Frozen,2026-10-27,Clearance,10,auto
+FROZ-004,Schnitzel paniert 2-Pack,Frozen,2026-09-08,2-for-1,30,auto
+FROZ-005,Vanilleeis 500ml,Frozen,2026-09-08,2-for-1,20,category_mgr
+FROZ-005,Vanilleeis 500ml,Frozen,2026-11-03,Weekend Special,20,regional_mgr
+FROZ-006,Fischstäbchen 400g,Frozen,2026-09-15,New Listing,5,regional_mgr
+FROZ-006,Fischstäbchen 400g,Frozen,2026-10-06,Clearance,10,category_mgr
+FROZ-006,Fischstäbchen 400g,Frozen,2026-11-10,Clearance,5,category_mgr
+FROZ-007,Spinat gehackt 450g,Frozen,2026-10-13,Loyalty Card,20,regional_mgr
+HBC-001,Waschmittel Flüssig 1.5L,HBC,2026-11-03,Weekend Special,25,category_mgr
+HBC-002,Zahncreme 75ml,HBC,2026-09-29,Loyalty Card,5,category_mgr
+HBC-003,Shampoo 300ml,HBC,2026-10-13,Clearance,25,auto
+HBC-004,Duschgel 250ml,HBC,2026-09-08,Loyalty Card,20,regional_mgr
+HBC-004,Duschgel 250ml,HBC,2026-11-10,New Listing,5,category_mgr
+HBC-004,Duschgel 250ml,HBC,2026-11-17,New Listing,15,auto

@@ -1,0 +1,93 @@
+[
+  {
+    "date": "2026-11-29",
+    "name": "Fortuna Düsseldorf vs Hamburger SV",
+    "city": "Düsseldorf",
+    "venue": "MERKUR SPIEL-ARENA",
+    "expected_attendance": 55000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "HBC"
+    ]
+  },
+  {
+    "date": "2026-07-11",
+    "name": "Rheinkirmes Düsseldorf",
+    "city": "Düsseldorf",
+    "venue": "Oberkasseler Rheinwiesen",
+    "expected_attendance": 50000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "Bakery",
+      "Produce"
+    ]
+  },
+  {
+    "date": "2026-02-14",
+    "name": "Karneval Rosenmontagszug Düsseldorf",
+    "city": "Düsseldorf",
+    "venue": "Innenstadt Düsseldorf",
+    "expected_attendance": 40000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "Bakery",
+      "HBC"
+    ]
+  },
+  {
+    "date": "2026-12-05",
+    "name": "Düsseldorfer Weihnachtsmarkt",
+    "city": "Düsseldorf",
+    "venue": "Marktplatz Düsseldorf",
+    "expected_attendance": 30000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "Bakery"
+    ]
+  },
+  {
+    "date": "2026-08-22",
+    "name": "Alt-Düsseldorf Weinfest",
+    "city": "Düsseldorf",
+    "venue": "Burgplatz Düsseldorf",
+    "expected_attendance": 20000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "Produce"
+    ]
+  },
+  {
+    "date": "2026-10-04",
+    "name": "Düsseldorf Marathon",
+    "city": "Düsseldorf",
+    "venue": "Rheinuferpromenade",
+    "expected_attendance": 15000,
+    "category_boosts": [
+      "Produce",
+      "Dairy",
+      "HBC"
+    ]
+  },
+  {
+    "date": "2026-06-20",
+    "name": "Open-Air Konzert Tonhalle",
+    "city": "Düsseldorf",
+    "venue": "Ehrenhof Düsseldorf",
+    "expected_attendance": 10000,
+    "category_boosts": [
+      "Beer/Spirits",
+      "HBC"
+    ]
+  },
+  {
+    "date": "2026-12-19",
+    "name": "Weihnachtsmarkt Oberhausen",
+    "city": "Oberhausen",
+    "venue": "Altmarkt Oberhausen",
+    "expected_attendance": 8000,
+    "category_boosts": [
+      "Bakery",
+      "Dairy"
+    ]
+  }
+]
